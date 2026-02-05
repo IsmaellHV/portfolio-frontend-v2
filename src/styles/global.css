@@ -63,32 +63,32 @@
 
 /* Dark Mode (Manual Toggle) */
 .dark {
-  --background: 0 0% 14.5%; /* Almost Black */
+  --background: 0 0% 3%; /* Almost Black - más oscuro */
   --foreground: 0 0% 98.5%;
 
-  --card: 0 0% 20.5%;
+  --card: 0 0% 8%;
   --card-foreground: 0 0% 98.5%;
 
-  --popover: 0 0% 20.5%;
+  --popover: 0 0% 8%;
   --popover-foreground: 0 0% 98.5%;
 
-  --primary: 0 0% 92.2%; /* White actions */
-  --primary-foreground: 0 0% 20.5%;
+  --primary: 0 0% 96%; /* White actions */
+  --primary-foreground: 0 0% 10%;
 
-  --secondary: 0 0% 26.9%;
+  --secondary: 0 0% 12%;
   --secondary-foreground: 0 0% 98.5%;
 
-  --muted: 0 0% 26.9%;
-  --muted-foreground: 0 0% 70.8%;
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 65%;
 
-  --accent: 0 0% 26.9%;
+  --accent: 0 0% 12%;
   --accent-foreground: 0 0% 98.5%;
 
   --destructive: 0 62% 70%;
   --destructive-foreground: 0 0% 98%;
 
-  --border: 0 0% 26.9%;
-  --input: 0 0% 26.9%;
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
   --ring: 0 0% 55.6%;
 }
 
