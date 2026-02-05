@@ -42,9 +42,9 @@ jobs:
       - name: Git Semantic Version
         uses: PaulHatch/semantic-version@v5.4.0
         with:
-          major_pattern: 'mayor'
-          minor_pattern: 'feat'
-          format: '${major}.${minor}.${increment}'
+          major_pattern: "mayor"
+          minor_pattern: "feat"
+          format: "${major}.${minor}.${increment}"
         id: version
 
       - name: Set up Docker Buildx
