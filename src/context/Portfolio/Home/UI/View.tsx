@@ -25,11 +25,22 @@ export const View = (props: PropsView) => {
   const { profile, experiences, featuredProjects } = props.value;
 
   return (
-    <div className="container mx-auto px-6 md:px-12 max-w-5xl space-y-24 pb-24">
-      <HeroSection profile={profile} />
-      <AboutSection />
-      <ExperienceSection experiences={experiences} />
-      <ProjectsSection projects={featuredProjects} />
+    <div className="min-h-screen">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 min-h-screen">
+          {/* Left Column - Sticky Intro */}
+          <div className="lg:sticky lg:top-0 lg:h-screen flex flex-col justify-center py-12 lg:py-24">
+            <HeroSection profile={profile} />
+          </div>
+          
+          {/* Right Column - Scrollable Content */}
+          <div className="space-y-24 py-12 lg:py-24" id="content">
+            <AboutSection />
+            <ExperienceSection experiences={experiences} />
+            <ProjectsSection projects={featuredProjects} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { useLanguageStore } from '@/context/shared/Infrastructure/StoreLanguage';
 import { Button } from '@/components/ui/button';
-import { FileDown, Download } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 export const CvButton = () => {

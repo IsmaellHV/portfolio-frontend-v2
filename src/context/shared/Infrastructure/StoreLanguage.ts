@@ -11,7 +11,7 @@ interface LanguageState {
 export const useLanguageStore = create<LanguageState>()(
   persist(
     (set) => ({
-      language: 'es', // Default to Spanish
+      language: 'es', 
       setLanguage: (lang) => set({ language: lang }),
     }),
     {

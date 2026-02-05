@@ -14,7 +14,7 @@ export function LanguageToggle() {
     setLanguage(language === 'en' ? 'es' : 'en');
   };
 
-  if (!mounted) return <div className="w-8 h-9" />; // Placeholder to avoid hydration mismatch
+  if (!mounted) return <div className="w-8 h-9" />;
 
   return (
     <Button variant="ghost" size="sm" onClick={toggleLang} className="font-mono text-xs h-9 px-2 rounded-none hover:bg-transparent text-foreground hover:text-foreground/80 transition-colors">

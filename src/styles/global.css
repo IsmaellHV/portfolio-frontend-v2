@@ -106,11 +106,23 @@ body {
     'ss04' 1,
     'ss01' 1,
     'zero' 1; /* Typography tweaks */
+  background: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--foreground) / 0.03), transparent),
+    hsl(var(--background));
+}
+
+.dark body {
+  background: 
+    radial-gradient(ellipse 80% 50% at 50% -20%, hsl(var(--foreground) / 0.05), transparent),
+    hsl(var(--background));
 }
 
 h1,
 h2,
-h3,
+h3 {
+  @apply font-sans;
+}
+
 h4,
 h5,
 h6 {
@@ -119,10 +131,23 @@ h6 {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Offset for fixed header */
 }
 
-/* Minimal Utilities */
-.dots-pattern {
-  background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }

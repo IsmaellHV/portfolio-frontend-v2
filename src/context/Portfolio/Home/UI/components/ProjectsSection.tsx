@@ -1,54 +1,46 @@
 import type { Project } from '../../Domain/Entities';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, ArrowRight } from 'lucide-react';
 
 export const ProjectsSection = ({ projects }: { projects: Project[] }) => {
   return (
-    <section id="projects" className="py-20 space-y-10">
-      <div className="flex justify-between items-end">
-        <div className="space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">Featured Projects</h2>
-          <p className="text-muted-foreground">A selection of my recent work</p>
-        </div>
-        <Button variant="ghost" className="hidden sm:inline-flex" asChild>
-          <a href="/projects">View All Projects</a>
-        </Button>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <section id="projects" className="space-y-8 scroll">
+      <h2 className="text-sm font-medium tracking-wider uppercase text-foreground/50">Featured Projects</h2>
+      <div className="space-y-10">
         {projects.map((project) => (
-          <Card key={project.id} className="group flex flex-col justify-between overflow-hidden border-border/50 bg-card/50 hover:bg-card/80 hover:border-border transition-all duration-300">
-            <div>
-              <CardHeader>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">{project.title}</CardTitle>
-                <CardDescription className="line-clamp-2 mt-2">{project.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary" className="text-xs font-normal opacity-80">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
+          <a
+            key={project.id}
+            href={project.link || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block space-y-3 cursor-pointer"
+          >
+            <div className="flex items-baseline gap-2">
+              <h3 className="text-base md:text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                {project.title}
+              </h3>
+              <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-            <CardFooter className="gap-2 pt-0 mt-auto">
-              <Button variant="outline" size="sm" asChild className="gap-2 h-8 text-xs">
-                <a href={project.link || '#'} target="_blank" rel="noopener noreferrer">
-                  View Project <ExternalLink className="h-3 w-3" />
-                </a>
-              </Button>
-            </CardFooter>
-          </Card>
+            <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">
+              {project.description}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <span key={tag} className="text-xs text-foreground/50 font-mono">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </a>
         ))}
       </div>
-      <div className="sm:hidden flex justify-center pt-8">
-        <Button variant="ghost" asChild>
-          <a href="/projects">View All Projects</a>
-        </Button>
+      <div className="pt-4">
+        <a 
+          href="/projects" 
+          className="inline-flex items-center gap-2 text-sm text-foreground/60 hover:text-foreground transition-colors group"
+        >
+          View All Projects
+          <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+        </a>
       </div>
     </section>
   );
