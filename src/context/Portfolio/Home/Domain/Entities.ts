@@ -30,8 +30,22 @@ export interface Project {
   image?: string;
 }
 
-export interface PortfolioData {
+export interface About {
+  paragraphs: string[];
+}
+
+export interface Sections {
+  about: string;
+  experience: string;
+  projects: string;
+}
+
+export interface ILanguage {
   profile: Profile;
+  sections: Sections;
+  about: About;
   experiences: Experience[];
   featuredProjects: Project[];
 }
+
+export type PortfolioData = ILanguage;

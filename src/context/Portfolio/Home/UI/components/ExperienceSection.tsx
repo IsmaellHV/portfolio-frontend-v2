@@ -1,9 +1,9 @@
 import type { Experience } from '../../Domain/Entities';
 
-export const ExperienceSection = ({ experiences }: { experiences: Experience[] }) => {
+export const ExperienceSection = ({ experiences, title }: { experiences: Experience[]; title: string }) => {
   return (
     <section id="experience" className="space-y-8 scroll">
-      <h2 className="text-sm font-medium tracking-wider uppercase text-foreground/50">Experience</h2>
+      <h2 className="text-sm font-medium tracking-wider uppercase text-foreground/50">{title}</h2>
       <div className="space-y-12">
         {experiences.map((exp, index) => (
           <div key={index} className="group space-y-3">

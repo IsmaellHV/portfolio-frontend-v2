@@ -22,7 +22,7 @@ export const View = (props: PropsView) => {
     return null;
   }
 
-  const { profile, experiences, featuredProjects } = props.value;
+  const { profile, about, sections, experiences, featuredProjects } = props.value;
 
   return (
     <div className="min-h-screen">
@@ -35,9 +35,9 @@ export const View = (props: PropsView) => {
           
           {/* Right Column - Scrollable Content */}
           <div className="space-y-24 py-12 lg:py-24" id="content">
-            <AboutSection />
-            <ExperienceSection experiences={experiences} />
-            <ProjectsSection projects={featuredProjects} />
+            <AboutSection about={about} title={sections.about} />
+            <ExperienceSection experiences={experiences} title={sections.experience} />
+            <ProjectsSection projects={featuredProjects} title={sections.projects} />
           </div>
         </div>
       </div>
