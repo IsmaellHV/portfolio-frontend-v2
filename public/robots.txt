@@ -3,4 +3,4 @@ Disallow: /admin/
 Disallow: /login/
 Allow: /
 
-Sitemap: https://ismaelhv.com/sitemap.xml
+Sitemap: https://ismaelhv.com/sitemap-index.xml

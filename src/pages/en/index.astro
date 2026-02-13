@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex" />
+    <title>Redirecting...</title>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/" />
+    </noscript>
+  </head>
+  <body>
+    <script is:inline>
+      localStorage.setItem('locale', 'en');
+      const hash = window.location.hash || '';
+      window.location.replace(`/${hash}`);
+    </script>
+  </body>
+</html>

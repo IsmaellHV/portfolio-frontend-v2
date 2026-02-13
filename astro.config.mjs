@@ -2,13 +2,15 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
-import react from '@astrojs/react';
+import { ENVIRONMENT } from './src/env/index.ts';
+
+const site = ENVIRONMENT.APP.URL.trim() || undefined;
+const integrations = site ? [sitemap()] : [];
 
 export default defineConfig({
-  site: 'https://ismaelhv.com',
+  site,
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [tailwindcss()],
   },
-
-  integrations: [react(), sitemap()]
+  integrations,
 });

@@ -1,0 +1,29 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getPortfolioData, MESSAGES_BY_LOCALE } from '@/data/portfolio';
+import ProjectsListSection from '@/sections/projects/ProjectsListSection.astro';
+
+const dataByLocale = {
+  es: getPortfolioData('es'),
+  en: getPortfolioData('en'),
+};
+
+const titleByLocale = {
+  es: `${MESSAGES_BY_LOCALE.es.pages.projectsTitle} - ${dataByLocale.es.profile.name}`,
+  en: `${MESSAGES_BY_LOCALE.en.pages.projectsTitle} - ${dataByLocale.en.profile.name}`,
+};
+
+const descriptionByLocale = {
+  es: `${MESSAGES_BY_LOCALE.es.pages.projectsTitle} de ${dataByLocale.es.profile.name}`,
+  en: `${MESSAGES_BY_LOCALE.en.pages.projectsTitle} by ${dataByLocale.en.profile.name}`,
+};
+---
+
+<Layout titleByLocale={titleByLocale} descriptionByLocale={descriptionByLocale} defaultLocale="es">
+  <ProjectsListSection
+    projectsByLocale={{ es: dataByLocale.es.featuredProjects, en: dataByLocale.en.featuredProjects }}
+    titleByLocale={{ es: MESSAGES_BY_LOCALE.es.pages.projectsTitle, en: MESSAGES_BY_LOCALE.en.pages.projectsTitle }}
+    backLabelByLocale={{ es: MESSAGES_BY_LOCALE.es.actions.backHome, en: MESSAGES_BY_LOCALE.en.actions.backHome }}
+    visitProjectLabelByLocale={{ es: MESSAGES_BY_LOCALE.es.actions.visitProject, en: MESSAGES_BY_LOCALE.en.actions.visitProject }}
+  />
+</Layout>

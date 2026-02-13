@@ -1,0 +1,65 @@
+---
+import type { Experience, Locale } from '@/data/portfolio';
+
+interface Props {
+  experiencesByLocale: Record<Locale, Experience[]>;
+  titleByLocale: Record<Locale, string>;
+}
+
+const { experiencesByLocale, titleByLocale } = Astro.props;
+---
+
+<section id="experience" class="space-y-4 sm:space-y-6 lg:space-y-8">
+  <h2 class="text-xs sm:text-sm font-medium tracking-wider uppercase text-foreground/50">
+    <span data-i18n-locale="es">{titleByLocale.es}</span>
+    <span data-i18n-locale="en">{titleByLocale.en}</span>
+  </h2>
+
+  <div class="space-y-6 sm:space-y-8 lg:space-y-12">
+    <div data-i18n-locale="es" class="space-y-6 sm:space-y-8 lg:space-y-12">
+      {experiencesByLocale.es.map((exp) => (
+        <article class="group space-y-2 sm:space-y-3">
+          <div class="flex flex-col sm:grid sm:grid-cols-[1fr_auto] gap-1 sm:gap-4 items-start sm:items-baseline">
+            <div class="space-y-1">
+              <h3 class="text-sm sm:text-base md:text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                {exp.role} · {exp.company}
+              </h3>
+            </div>
+            <span class="text-xs sm:text-sm text-muted-foreground font-mono">{exp.period}</span>
+          </div>
+          <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
+            {exp.description.map((desc) => (
+              <li class="flex items-start gap-2 sm:gap-3">
+                <span class="text-foreground/30 select-none mt-0.5">→</span>
+                <span class="flex-1">{desc}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+
+    <div data-i18n-locale="en" class="space-y-6 sm:space-y-8 lg:space-y-12">
+      {experiencesByLocale.en.map((exp) => (
+        <article class="group space-y-2 sm:space-y-3">
+          <div class="flex flex-col sm:grid sm:grid-cols-[1fr_auto] gap-1 sm:gap-4 items-start sm:items-baseline">
+            <div class="space-y-1">
+              <h3 class="text-sm sm:text-base md:text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                {exp.role} · {exp.company}
+              </h3>
+            </div>
+            <span class="text-xs sm:text-sm text-muted-foreground font-mono">{exp.period}</span>
+          </div>
+          <ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-muted-foreground">
+            {exp.description.map((desc) => (
+              <li class="flex items-start gap-2 sm:gap-3">
+                <span class="text-foreground/30 select-none mt-0.5">→</span>
+                <span class="flex-1">{desc}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

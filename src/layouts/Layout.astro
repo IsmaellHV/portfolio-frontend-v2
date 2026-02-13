@@ -1,141 +1,306 @@
 ---
 import '../styles/global.css';
-import { AppRoutes } from '../context/shared/Domain/Routes';
 import '@fontsource/oxygen-mono';
 import '@fontsource/oxygen';
+import { routesForLocale } from '@/consts/routes';
+import { MESSAGES_BY_LOCALE, type Locale } from '@/data/portfolio';
+import { ENVIRONMENT } from '@/env';
 
 interface Props {
-	title: string;
-    description?: string;
+  titleByLocale: Record<Locale, string>;
+  descriptionByLocale: Record<Locale, string>;
+  defaultLocale?: Locale;
 }
 
-import { ThemeToggle } from '../components/ui/ThemeToggle';
-import { LanguageToggle } from '../components/ui/LanguageToggle';
-import { CvButton } from '../components/ui/CvButton';
-import { ENVIRONMENT } from '../env';
+const { titleByLocale, descriptionByLocale, defaultLocale = 'es' } = Astro.props;
+const routes = routesForLocale();
+const messagesEs = MESSAGES_BY_LOCALE.es;
+const messagesEn = MESSAGES_BY_LOCALE.en;
 
-const {
-    title = ENVIRONMENT.APP.TITLE,
-    description = ENVIRONMENT.APP.DESCRIPTION
-} = Astro.props;
-
-const navItems = [
-    { label: "About", href: AppRoutes.home.about },
-    { label: "Experience", href: AppRoutes.home.experience },
-    { label: "Projects", href: AppRoutes.home.projects },
-];
+const resolvedDefaultLocale = defaultLocale === 'en' ? 'en' : 'es';
+const defaultTitle = titleByLocale[resolvedDefaultLocale] ?? titleByLocale.es;
+const defaultDescription = descriptionByLocale[resolvedDefaultLocale] ?? descriptionByLocale.es;
+const defaultCvUrl = resolvedDefaultLocale === 'en' ? '/cv/english.pdf' : '/cv/spanish.pdf';
+const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content={description} />
-		<meta name="viewport" content="width=device-width" />
-        <meta name="keywords" content={ENVIRONMENT.APP.KEYWORDS} />
-        <meta name="author" content={ENVIRONMENT.APP.AUTHOR} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+<html lang={resolvedDefaultLocale} data-locale={resolvedDefaultLocale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={defaultDescription} />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="keywords" content={ENVIRONMENT.APP.KEYWORDS} />
+    <meta name="author" content={ENVIRONMENT.APP.AUTHOR} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{defaultTitle}</title>
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={Astro.url} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={ENVIRONMENT.META.OG_IMAGE} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={defaultTitle} />
+    <meta property="og:description" content={defaultDescription} />
+    <meta property="og:image" content={ENVIRONMENT.META.OG_IMAGE} />
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={Astro.url} />
-        <meta property="twitter:title" content={title} />
-        <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={ENVIRONMENT.META.OG_IMAGE} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={defaultTitle} />
+    <meta property="twitter:description" content={defaultDescription} />
+    <meta property="twitter:image" content={ENVIRONMENT.META.OG_IMAGE} />
 
-        <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
-        <script is:inline>
-            // Theme Script to prevent flash of wrong theme
-            const getThemePreference = () => {
-                if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-                    return localStorage.getItem('theme');
-                }
-                // Default to dark mode regardless of system preference for new visitors
-                return 'dark';
-            };
-            const isDark = getThemePreference() === 'dark';
-            document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-        
-            if (typeof localStorage !== 'undefined') {
-                const observer = new MutationObserver(() => {
-                    const isDark = document.documentElement.classList.contains('dark');
-                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                });
-                observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    <script is:inline>
+      const savedTheme = localStorage.getItem('theme');
+      const theme = savedTheme === 'light' ? 'light' : 'dark';
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    </script>
+
+    <script is:inline>
+      const savedLocale = localStorage.getItem('locale');
+      const locale = savedLocale === 'en' ? 'en' : 'es';
+      document.documentElement.setAttribute('lang', locale);
+      document.documentElement.setAttribute('data-locale', locale);
+    </script>
+  </head>
+  <body
+    class="bg-background text-foreground min-h-screen flex flex-col font-sans"
+    data-title-es={titleByLocale.es}
+    data-title-en={titleByLocale.en}
+    data-description-es={descriptionByLocale.es}
+    data-description-en={descriptionByLocale.en}
+    data-theme-label-es={messagesEs.actions.theme}
+    data-theme-label-en={messagesEn.actions.theme}
+  >
+    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
+      <div class="container mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+        <a href={routes.home} class="text-lg sm:text-xl font-bold tracking-tight hover:text-primary transition-colors">IHV</a>
+
+        <div class="flex items-center gap-2 sm:gap-4 lg:gap-6">
+          <nav class="hidden md:flex gap-6 lg:gap-8">
+            <a href={routes.about} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <span data-i18n-locale="es">{messagesEs.nav.about}</span>
+              <span data-i18n-locale="en">{messagesEn.nav.about}</span>
+            </a>
+            <a href={routes.experience} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <span data-i18n-locale="es">{messagesEs.nav.experience}</span>
+              <span data-i18n-locale="en">{messagesEn.nav.experience}</span>
+            </a>
+            <a href={routes.projectsAnchor} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+              <span data-i18n-locale="es">{messagesEs.nav.projects}</span>
+              <span data-i18n-locale="en">{messagesEn.nav.projects}</span>
+            </a>
+          </nav>
+
+          <div class="flex items-center gap-1 sm:gap-2 pl-2 sm:pl-4 border-l border-border/50">
+            <a data-cv-link href={defaultCvUrl} download target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">CV</a>
+
+            <a href="mailto:contact@ismael.dev" class="hidden lg:block text-sm font-medium text-primary hover:text-primary/80 transition-colors mr-2 lg:mr-4">
+              <span data-i18n-locale="es">{messagesEs.nav.contact}</span>
+              <span data-i18n-locale="en">{messagesEn.nav.contact}</span>
+            </a>
+
+            <button type="button" data-lang-toggle class="h-9 rounded-md px-3 font-mono text-xs text-foreground transition-colors hover:text-foreground/80">{nextLocaleLabel}</button>
+
+            <button type="button" data-theme-toggle class="theme-toggle" aria-label={messagesEs.actions.theme} title={messagesEs.actions.theme}>
+              <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+                <path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+              </svg>
+              <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a7.2 7.2 0 1 0 11.1 11.1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <span class="sr-only">
+                <span data-i18n-locale="es">{messagesEs.actions.theme}</span>
+                <span data-i18n-locale="en">{messagesEn.actions.theme}</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1 pt-16">
+      <slot />
+    </main>
+
+    <footer class="border-t border-white/5 py-8 mt-20">
+      <div class="container mx-auto px-6 text-center text-sm text-muted-foreground">
+        <p>&copy; {new Date().getFullYear()} Ismael Hurtado Vargas.</p>
+      </div>
+    </footer>
+
+    <script>
+      type Locale = 'es' | 'en';
+      type Theme = 'light' | 'dark';
+      type LocaleOptions = { persist?: boolean; preserveHash?: boolean };
+
+      const root = document.documentElement;
+      const body = document.body as HTMLBodyElement;
+
+      const titleByLocale: Record<Locale, string> = {
+        es: body.dataset.titleEs || document.title,
+        en: body.dataset.titleEn || document.title,
+      };
+      const descriptionByLocale: Record<Locale, string> = {
+        es: body.dataset.descriptionEs || '',
+        en: body.dataset.descriptionEn || '',
+      };
+      const themeLabelByLocale: Record<Locale, string> = {
+        es: body.dataset.themeLabelEs || 'Tema',
+        en: body.dataset.themeLabelEn || 'Theme',
+      };
+      const cvByLocale: Record<Locale, string> = {
+        es: '/cv/spanish.pdf',
+        en: '/cv/english.pdf',
+      };
+
+      const descriptionMeta = document.querySelector('meta[name="description"]');
+      const ogTitleMeta = document.querySelector('meta[property="og:title"]');
+      const ogDescriptionMeta = document.querySelector('meta[property="og:description"]');
+      const twitterTitleMeta = document.querySelector('meta[property="twitter:title"]');
+      const twitterDescriptionMeta = document.querySelector('meta[property="twitter:description"]');
+
+      const themeToggleButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+      const langToggleButton = document.querySelector<HTMLButtonElement>('[data-lang-toggle]');
+      const cvLink = document.querySelector<HTMLAnchorElement>('[data-cv-link]');
+
+      const getLocaleFromStorage = (): Locale => {
+        const savedLocale = localStorage.getItem('locale');
+        return savedLocale === 'en' ? 'en' : 'es';
+      };
+
+      const getCurrentLocale = (): Locale => (root.getAttribute('data-locale') === 'en' ? 'en' : 'es');
+      const scrollToHashTarget = (behavior: ScrollBehavior = 'auto', hash: string = window.location.hash): void => {
+        if (!hash || hash === '#') return;
+
+        const targetElement = document.querySelector(hash);
+        if (!targetElement) return;
+
+        const headerOffset = 80;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior,
+        });
+      };
+
+      const applyTheme = (nextTheme: Theme): void => {
+        root.classList.toggle('dark', nextTheme === 'dark');
+        root.setAttribute('data-theme', nextTheme);
+        localStorage.setItem('theme', nextTheme);
+      };
+
+      const applyLocale = (locale: Locale, options: LocaleOptions = { persist: true, preserveHash: true }): void => {
+        const shouldPersist = options.persist !== false;
+        const shouldPreserveHash = options.preserveHash !== false;
+        const nextLocale = locale === 'en' ? 'en' : 'es';
+        root.setAttribute('lang', nextLocale);
+        root.setAttribute('data-locale', nextLocale);
+        if (shouldPersist) localStorage.setItem('locale', nextLocale);
+
+        if (langToggleButton) langToggleButton.textContent = nextLocale === 'en' ? 'ES' : 'EN';
+        if (cvLink) cvLink.setAttribute('href', cvByLocale[nextLocale]);
+
+        const themeLabel = themeLabelByLocale[nextLocale];
+        if (themeToggleButton) {
+          themeToggleButton.setAttribute('aria-label', themeLabel);
+          themeToggleButton.setAttribute('title', themeLabel);
+        }
+
+        const nextTitle = titleByLocale[nextLocale];
+        const nextDescription = descriptionByLocale[nextLocale];
+
+        if (nextTitle) {
+          document.title = nextTitle;
+          ogTitleMeta?.setAttribute('content', nextTitle);
+          twitterTitleMeta?.setAttribute('content', nextTitle);
+        }
+
+        if (nextDescription) {
+          descriptionMeta?.setAttribute('content', nextDescription);
+          ogDescriptionMeta?.setAttribute('content', nextDescription);
+          twitterDescriptionMeta?.setAttribute('content', nextDescription);
+        }
+
+        if (shouldPreserveHash && window.location.hash) {
+          requestAnimationFrame(() => scrollToHashTarget('auto'));
+        } else if (!shouldPreserveHash && window.location.hash) {
+          history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
+          window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+      };
+
+      applyLocale(getLocaleFromStorage(), { persist: false, preserveHash: true });
+
+      themeToggleButton?.addEventListener('click', async () => {
+        const nextTheme = root.classList.contains('dark') ? 'light' : 'dark';
+        const startViewTransition = document.startViewTransition?.bind(document);
+
+        if (!startViewTransition || !themeToggleButton) {
+          applyTheme(nextTheme);
+          return;
+        }
+
+        await startViewTransition(() => applyTheme(nextTheme)).ready;
+
+        const rect = themeToggleButton.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        const endRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
+
+        try {
+          root.animate(
+            {
+              clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`],
+            },
+            {
+              duration: 420,
+              easing: 'ease-in-out',
+              pseudoElement: '::view-transition-new(root)',
+            },
+          );
+        } catch {
+          // noop: animation is optional
+        }
+      });
+
+      langToggleButton?.addEventListener('click', () => {
+        const currentLocale = getCurrentLocale();
+        const nextLocale = currentLocale === 'en' ? 'es' : 'en';
+        applyLocale(nextLocale, { persist: true, preserveHash: false });
+      });
+
+      document.addEventListener('DOMContentLoaded', () => {
+        if (window.location.hash) requestAnimationFrame(() => scrollToHashTarget('auto'));
+        const links = document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]');
+
+        links.forEach((link) => {
+          link.addEventListener('click', (event: MouseEvent) => {
+            const href = link.getAttribute('href');
+            if (!href || !href.includes('#')) return;
+
+            const hashIndex = href.indexOf('#');
+            const targetId = href.slice(hashIndex);
+            if (!targetId || targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (!targetElement) return;
+
+            const url = new URL(link.href);
+            if (url.pathname !== window.location.pathname) return;
+
+            event.preventDefault();
+            if (window.location.hash !== targetId) {
+              history.replaceState(null, '', `${window.location.pathname}${window.location.search}${targetId}`);
             }
-        </script>
-	</head>
-	<body class="bg-background text-foreground min-h-screen flex flex-col font-sans">
-        <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
-            <div class="container mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-                <a href={AppRoutes.home.root} class="text-lg sm:text-xl font-bold tracking-tight hover:text-primary transition-colors">
-                    IHV
-                </a>
-                <div class="flex items-center gap-2 sm:gap-4 lg:gap-6">
-                    <nav class="hidden md:flex gap-6 lg:gap-8">
-                        {navItems.map(item => (
-                            <a href={item.href} class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-                                {item.label}
-                            </a>
-                        ))}
-                    </nav>
-                    <div class="flex items-center gap-1 sm:gap-2 pl-2 sm:pl-4 border-l border-border/50">
-                         <CvButton client:load />
-                         <a href="mailto:contact@ismael.dev" class="hidden lg:block text-sm font-medium text-primary hover:text-primary/80 transition-colors mr-2 lg:mr-4">
-                            Contact
-                        </a>
-                        <LanguageToggle client:load />
-                        <ThemeToggle client:load />
-                    </div>
-                </div>
-            </div>
-        </header>
-
-		<main class="flex-1 pt-16">
-			<slot />
-		</main>
-
-        <footer class="border-t border-white/5 py-8 mt-20">
-             <div class="container mx-auto px-6 text-center text-sm text-muted-foreground">
-                <p>&copy; {new Date().getFullYear()} Ismael Hurtado Vargas.</p>
-            </div>
-        </footer>
-
-        <script>
-            // Smooth scroll with offset for navigation links
-            document.addEventListener('DOMContentLoaded', () => {
-                const links = document.querySelectorAll('a[href^="#"]');
-                
-                links.forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetId = link.getAttribute('href');
-                        if (!targetId || targetId === '#') return;
-                        
-                        const targetElement = document.querySelector(targetId);
-                        if (targetElement) {
-                            const headerOffset = 80;
-                            const elementPosition = targetElement.getBoundingClientRect().top;
-                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                            
-                            window.scrollTo({
-                                top: offsetPosition,
-                                behavior: 'smooth'
-                            });
-                        }
-                    });
-                });
-            });
-        </script>
-	</body>
+            scrollToHashTarget('smooth', targetId);
+          });
+        });
+      });
+    </script>
+  </body>
 </html>

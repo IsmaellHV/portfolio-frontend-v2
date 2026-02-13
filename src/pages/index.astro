@@ -1,14 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { ManagerEntity } from '../context/Portfolio/Home/index';
-import { RepositoryImpl } from '../context/Portfolio/Home/Infrastructure/RepositoryImpl';
-import { UseCaseGetPortfolio } from '../context/Portfolio/Home/Application/UseCaseGetPortfolio';
+import Layout from '@/layouts/Layout.astro';
+import HomeSections from '@/sections/home/HomeSections.astro';
+import { getPortfolioData, MESSAGES_BY_LOCALE } from '@/data/portfolio';
 
-const repository = new RepositoryImpl();
-const useCase = new UseCaseGetPortfolio(repository);
-const data = await useCase.execute();
+const dataByLocale = {
+  es: getPortfolioData('es'),
+  en: getPortfolioData('en'),
+};
+
+const titleByLocale = {
+  es: `${dataByLocale.es.profile.name} - ${dataByLocale.es.profile.role}`,
+  en: `${dataByLocale.en.profile.name} - ${dataByLocale.en.profile.role}`,
+};
+
+const descriptionByLocale = {
+  es: dataByLocale.es.profile.summary,
+  en: dataByLocale.en.profile.summary,
+};
 ---
 
-<Layout title={`${data.profile.name} - ${data.profile.role}`} description={data.profile.summary}>
-    <ManagerEntity client:load initialData={data} />
+<Layout titleByLocale={titleByLocale} descriptionByLocale={descriptionByLocale} defaultLocale="es">
+  <HomeSections dataByLocale={dataByLocale} messagesByLocale={MESSAGES_BY_LOCALE} />
 </Layout>

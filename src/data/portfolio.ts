@@ -1,46 +1,109 @@
-import type { ILanguage } from '../../Portfolio/Home/Domain/Entities';
+export type Locale = 'es' | 'en';
 
-export const AdapterLanguage: Record<'es' | 'en', ILanguage> = {
+export interface SocialLink {
+  platform: string;
+  url: string;
+}
+
+export interface Profile {
+  name: string;
+  role: string;
+  summary: string;
+  socials: SocialLink[];
+}
+
+export interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  description: string[];
+}
+
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  tags: string[];
+  link?: string;
+}
+
+export interface About {
+  paragraphs: string[];
+}
+
+export interface SectionTitles {
+  about: string;
+  experience: string;
+  projects: string;
+}
+
+export interface PortfolioData {
+  profile: Profile;
+  sections: SectionTitles;
+  about: About;
+  experiences: Experience[];
+  featuredProjects: Project[];
+}
+
+export interface LocaleMessages {
+  nav: {
+    about: string;
+    experience: string;
+    projects: string;
+    contact: string;
+  };
+  actions: {
+    viewAllProjects: string;
+    backHome: string;
+    visitProject: string;
+    theme: string;
+  };
+  pages: {
+    projectsTitle: string;
+  };
+}
+
+export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
   es: {
     profile: {
       name: 'Ismael Hurtado Vargas',
       role: 'Full-Stack Web & Mobile Developer / IA',
-      summary: 'Construyo productos web y móviles con enfoque en rendimiento, UX y automatización con IA.',
+      summary: 'Construyo productos web y moviles con enfoque en rendimiento, UX y automatizacion con IA.',
       socials: [
-        { platform: 'GitHub', url: 'https://github.com/ismaellhv', icon: 'github' },
-        { platform: 'LinkedIn', url: 'https://linkedin.com/in/ihurtadov', icon: 'linkedin' },
+        { platform: 'GitHub', url: 'https://github.com/ismaellhv' },
+        { platform: 'LinkedIn', url: 'https://linkedin.com/in/ihurtadov' },
       ],
     },
     sections: {
-      about: 'ACERCA DE MÍ',
+      about: 'ACERCA DE MI',
       experience: 'EXPERIENCIA',
       projects: 'PROYECTOS DESTACADOS',
     },
     about: {
       paragraphs: [
-        'Soy un desarrollador Full-Stack apasionado con un buen ojo para el diseño y una motivación por el rendimiento. Mi trayectoria comenzó en 2020, y desde entonces, he tenido el privilegio de trabajar con diversos clientes y empresas, perfeccionando mis habilidades tanto en tecnologías frontend como backend.',
-        'Me especializo en la interacción entre sistemas backend complejos e interfaces de usuario intuitivas. Actualmente, estoy explorando las potencialidades de la IA en el desarrollo de software, buscando formas de automatizar flujos de trabajo y crear aplicaciones más inteligentes.',
+        'Soy un desarrollador Full-Stack apasionado con un buen ojo para el diseno y una motivacion por el rendimiento. Mi trayectoria comenzo en 2020, y desde entonces, he tenido el privilegio de trabajar con diversos clientes y empresas, perfeccionando mis habilidades tanto en tecnologias frontend como backend.',
+        'Me especializo en la interaccion entre sistemas backend complejos e interfaces de usuario intuitivas. Actualmente, estoy explorando las potencialidades de la IA en el desarrollo de software, buscando formas de automatizar flujos de trabajo y crear aplicaciones mas inteligentes.',
       ],
     },
     experiences: [
       {
         company: 'Municipalidad Metropolitana de Lima',
         role: 'Analista Programador Senior',
-        period: '2023–Presente',
+        period: '2023-Presente',
         description: [
           'Desarrollo de APIs robustas y escalables.',
-          'Creación de dashboards interactivos para análisis de datos.',
-          'Integraciones con servicios de terceros y optimización de performance.',
+          'Creacion de dashboards interactivos para analisis de datos.',
+          'Integraciones con servicios de terceros y optimizacion de performance.',
         ],
       },
       {
         company: 'Dae Hipoteraria',
         role: 'Full-Stack Developer',
-        period: '2023–Presente',
+        period: '2023-Presente',
         description: [
           'Desarrollo de APIs robustas y escalables.',
-          'Creación de dashboards interactivos para análisis de datos.',
-          'Integraciones con servicios de terceros y optimización de performance.',
+          'Creacion de dashboards interactivos para analisis de datos.',
+          'Integraciones con servicios de terceros y optimizacion de performance.',
         ],
       },
     ],
@@ -54,15 +117,15 @@ export const AdapterLanguage: Record<'es' | 'en', ILanguage> = {
       },
       {
         id: '2',
-        title: 'Dashboard Analítico',
-        description: 'Plataforma de visualización de datos en tiempo real.',
+        title: 'Dashboard Analitico',
+        description: 'Plataforma de visualizacion de datos en tiempo real.',
         tags: ['React', 'Node', 'Postgres'],
         link: '#',
       },
       {
         id: '3',
-        title: 'App Móvil',
-        description: 'Aplicación móvil para gestión de tareas.',
+        title: 'App Movil',
+        description: 'Aplicacion movil para gestion de tareas.',
         tags: ['React Native', 'Expo'],
         link: '#',
       },
@@ -81,8 +144,8 @@ export const AdapterLanguage: Record<'es' | 'en', ILanguage> = {
       role: 'Full-Stack Web & Mobile Developer / AI',
       summary: 'Building web and mobile products focusing on performance, UX, and AI automation.',
       socials: [
-        { platform: 'GitHub', url: 'https://github.com/ismaellhv', icon: 'github' },
-        { platform: 'LinkedIn', url: 'https://linkedin.com/in/ihurtadov', icon: 'linkedin' },
+        { platform: 'GitHub', url: 'https://github.com/ismaellhv' },
+        { platform: 'LinkedIn', url: 'https://linkedin.com/in/ihurtadov' },
       ],
     },
     sections: {
@@ -100,7 +163,7 @@ export const AdapterLanguage: Record<'es' | 'en', ILanguage> = {
       {
         company: 'Municipalidad Metropolitana de Lima',
         role: 'Senior Programmer Analyst',
-        period: '2023–Present',
+        period: '2023-Present',
         description: [
           'Development of robust and scalable APIs.',
           'Creation of interactive dashboards for data analysis.',
@@ -110,7 +173,7 @@ export const AdapterLanguage: Record<'es' | 'en', ILanguage> = {
       {
         company: 'Dae Hipoteraria',
         role: 'Full-Stack Developer',
-        period: '2023–Present',
+        period: '2023-Present',
         description: [
           'Development of robust and scalable APIs.',
           'Creation of interactive dashboards for data analysis.',
@@ -149,4 +212,45 @@ export const AdapterLanguage: Record<'es' | 'en', ILanguage> = {
       },
     ],
   },
+};
+
+export const MESSAGES_BY_LOCALE: Record<Locale, LocaleMessages> = {
+  es: {
+    nav: {
+      about: 'Acerca',
+      experience: 'Experiencia',
+      projects: 'Proyectos',
+      contact: 'Contacto',
+    },
+    actions: {
+      viewAllProjects: 'Ver todos los proyectos',
+      backHome: 'Volver al inicio',
+      visitProject: 'Visitar proyecto',
+      theme: 'Tema',
+    },
+    pages: {
+      projectsTitle: 'Proyectos',
+    },
+  },
+  en: {
+    nav: {
+      about: 'About',
+      experience: 'Experience',
+      projects: 'Projects',
+      contact: 'Contact',
+    },
+    actions: {
+      viewAllProjects: 'View all projects',
+      backHome: 'Back to home',
+      visitProject: 'Visit project',
+      theme: 'Theme',
+    },
+    pages: {
+      projectsTitle: 'Projects',
+    },
+  },
+};
+
+export const getPortfolioData = (locale: Locale): PortfolioData => {
+  return PORTFOLIO_BY_LOCALE[locale];
 };

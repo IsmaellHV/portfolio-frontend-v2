@@ -1,0 +1,40 @@
+---
+import type { Locale, LocaleMessages, PortfolioData } from '@/data/portfolio';
+import HeroSection from './HeroSection.astro';
+import AboutSection from './AboutSection.astro';
+import ExperienceSection from './ExperienceSection.astro';
+import ProjectsSection from './ProjectsSection.astro';
+
+interface Props {
+  dataByLocale: Record<Locale, PortfolioData>;
+  messagesByLocale: Record<Locale, LocaleMessages>;
+}
+
+const { dataByLocale, messagesByLocale } = Astro.props;
+---
+
+<div class="min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24">
+    <div class="grid lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-24 min-h-screen">
+      <div class="lg:sticky lg:top-0 lg:h-screen flex flex-col justify-center py-8 sm:py-16 lg:py-24">
+        <HeroSection profileByLocale={{ es: dataByLocale.es.profile, en: dataByLocale.en.profile }} />
+      </div>
+
+      <div class="space-y-12 sm:space-y-16 lg:space-y-24 pb-12 sm:pb-16 lg:py-24" id="content">
+        <AboutSection
+          aboutByLocale={{ es: dataByLocale.es.about, en: dataByLocale.en.about }}
+          titleByLocale={{ es: dataByLocale.es.sections.about, en: dataByLocale.en.sections.about }}
+        />
+        <ExperienceSection
+          experiencesByLocale={{ es: dataByLocale.es.experiences, en: dataByLocale.en.experiences }}
+          titleByLocale={{ es: dataByLocale.es.sections.experience, en: dataByLocale.en.sections.experience }}
+        />
+        <ProjectsSection
+          projectsByLocale={{ es: dataByLocale.es.featuredProjects, en: dataByLocale.en.featuredProjects }}
+          titleByLocale={{ es: dataByLocale.es.sections.projects, en: dataByLocale.en.sections.projects }}
+          viewAllLabelByLocale={{ es: messagesByLocale.es.actions.viewAllProjects, en: messagesByLocale.en.actions.viewAllProjects }}
+        />
+      </div>
+    </div>
+  </div>
+</div>

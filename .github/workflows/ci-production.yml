@@ -16,27 +16,26 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Node.js
-        run: |
-          curl -sL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-          sudo apt-get install -y nodejs
-          node -v
-          npm -v
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
       - name: Create env file
         env:
           ENV_FILE: ${{ secrets.ENV_FILE }}
         run: echo "$ENV_FILE" | base64 --decode > .env
 
-      - name: Install dependencies (npm)
+      - name: Install dependencies
         run: npm install
 
-      # - name: Run Format
-      #   run: npm run format
+      - name: Run lint
+        run: npm run lint
 
-      # - name: Run Lint
-      #   run: npm run lint
+      - name: Run typecheck
+        run: npm run typecheck
 
-      - name: Build React App
+      - name: Build Astro app
         run: npm run build
 
       - name: Git Semantic Version
@@ -54,21 +53,20 @@ jobs:
         env:
           DOCKER_USER: ${{ secrets.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: |
-          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        run: docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
 
       - name: Build Docker Image
         env:
           PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
           NEW_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          docker build -t $PROJECT_NAME:$NEW_VERSION .
-          docker build -t $PROJECT_NAME:latest .
+          docker build -t "$PROJECT_NAME:$NEW_VERSION" .
+          docker build -t "$PROJECT_NAME:latest" .
 
       - name: Push Docker Image
         env:
           PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
           NEW_VERSION: ${{ steps.version.outputs.version }}
         run: |
-          docker push $PROJECT_NAME:$NEW_VERSION
-          docker push $PROJECT_NAME:latest
+          docker push "$PROJECT_NAME:$NEW_VERSION"
+          docker push "$PROJECT_NAME:latest"

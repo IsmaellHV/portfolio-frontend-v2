@@ -1,0 +1,30 @@
+---
+import type { About, Locale } from '@/data/portfolio';
+
+interface Props {
+  aboutByLocale: Record<Locale, About>;
+  titleByLocale: Record<Locale, string>;
+}
+
+const { aboutByLocale, titleByLocale } = Astro.props;
+---
+
+<section id="about" class="space-y-4 sm:space-y-6 lg:space-y-8">
+  <h2 class="text-xs sm:text-sm font-medium tracking-wider uppercase text-foreground/50">
+    <span data-i18n-locale="es">{titleByLocale.es}</span>
+    <span data-i18n-locale="en">{titleByLocale.en}</span>
+  </h2>
+
+  <div class="space-y-3 sm:space-y-4 text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
+    <div data-i18n-locale="es" class="space-y-3 sm:space-y-4">
+      {aboutByLocale.es.paragraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+    </div>
+    <div data-i18n-locale="en" class="space-y-3 sm:space-y-4">
+      {aboutByLocale.en.paragraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
+    </div>
+  </div>
+</section>

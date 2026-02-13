@@ -1,0 +1,62 @@
+---
+import type { Locale, Profile } from '@/data/portfolio';
+
+interface Props {
+  profileByLocale: Record<Locale, Profile>;
+}
+
+const { profileByLocale } = Astro.props;
+
+const splitName = (name: string) => {
+  const nameParts = name.split(' ');
+  return {
+    firstName: nameParts[0] || name,
+    secondName: nameParts[1] || '',
+  };
+};
+
+const namesByLocale = {
+  es: splitName(profileByLocale.es.name),
+  en: splitName(profileByLocale.en.name),
+};
+
+const socials = profileByLocale.es.socials;
+---
+
+<section id="hero" class="space-y-6 sm:space-y-8 lg:space-y-12 animate-in fade-in slide-in-from-left-4 duration-1000">
+  <div class="space-y-3 sm:space-y-4 lg:space-y-6">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-tight">
+      <span data-i18n-locale="es">
+        {namesByLocale.es.firstName}<br />
+        <span class="text-foreground/50">{namesByLocale.es.secondName}</span>
+      </span>
+      <span data-i18n-locale="en">
+        {namesByLocale.en.firstName}<br />
+        <span class="text-foreground/50">{namesByLocale.en.secondName}</span>
+      </span>
+    </h1>
+    <h2 class="text-sm sm:text-base md:text-lg text-foreground/70 font-medium max-w-sm">
+      <span data-i18n-locale="es">{profileByLocale.es.role}</span>
+      <span data-i18n-locale="en">{profileByLocale.en.role}</span>
+    </h2>
+  </div>
+
+  <p class="text-sm sm:text-base text-muted-foreground max-w-md leading-relaxed">
+    <span data-i18n-locale="es">{profileByLocale.es.summary}</span>
+    <span data-i18n-locale="en">{profileByLocale.en.summary}</span>
+  </p>
+
+  <div class="flex flex-wrap gap-4 pt-1 sm:pt-2 lg:pt-4">
+    {socials.map((social) => (
+      <a
+        href={social.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={social.platform}
+        class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+      >
+        {social.platform}
+      </a>
+    ))}
+  </div>
+</section>

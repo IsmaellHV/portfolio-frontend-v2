@@ -1,0 +1,72 @@
+---
+import type { Locale, Project } from '@/data/portfolio';
+
+interface Props {
+  projectsByLocale: Record<Locale, Project[]>;
+  titleByLocale: Record<Locale, string>;
+  backLabelByLocale: Record<Locale, string>;
+  visitProjectLabelByLocale: Record<Locale, string>;
+}
+
+const { projectsByLocale, titleByLocale, backLabelByLocale, visitProjectLabelByLocale } = Astro.props;
+const backHref = '/';
+---
+
+<section class="container mx-auto max-w-4xl px-6 py-24">
+  <div class="mb-10 flex items-center justify-between gap-4">
+    <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">
+      <span data-i18n-locale="es">{titleByLocale.es}</span>
+      <span data-i18n-locale="en">{titleByLocale.en}</span>
+    </h1>
+    <a href={backHref} class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+      <span data-i18n-locale="es">{backLabelByLocale.es}</span>
+      <span data-i18n-locale="en">{backLabelByLocale.en}</span>
+    </a>
+  </div>
+
+  <div data-i18n-locale="es" class="space-y-4">
+    {projectsByLocale.es.map((project) => {
+      const hasExternalLink = Boolean(project.link && project.link !== '#');
+
+      return (
+        <article class="rounded-lg border border-border/70 p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">{tag}</span>
+            ))}
+          </div>
+          {hasExternalLink && (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground">
+              {visitProjectLabelByLocale.es}
+            </a>
+          )}
+        </article>
+      );
+    })}
+  </div>
+
+  <div data-i18n-locale="en" class="space-y-4">
+    {projectsByLocale.en.map((project) => {
+      const hasExternalLink = Boolean(project.link && project.link !== '#');
+
+      return (
+        <article class="rounded-lg border border-border/70 p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
+          <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">{tag}</span>
+            ))}
+          </div>
+          {hasExternalLink && (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground">
+              {visitProjectLabelByLocale.en}
+            </a>
+          )}
+        </article>
+      );
+    })}
+  </div>
+</section>
