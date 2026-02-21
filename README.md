@@ -58,7 +58,6 @@ Copiar `.env.example` a `.env` y completar:
 ## Docker
 
 ```bash
-npm run build
 docker build -t portfolio-frontend-v2 .
 docker run --rm -p 3000:80 portfolio-frontend-v2
 ```

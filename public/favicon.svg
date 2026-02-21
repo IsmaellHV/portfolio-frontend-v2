@@ -1,0 +1,19 @@
+<svg width="128" height="128" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .stroke { stroke: #09090b; }
+    .fill { fill: #09090b; }
+    /* Adapts to Apple/Windows dark mode settings automatically! */
+    @media (prefers-color-scheme: dark) {
+      .stroke { stroke: #ffffff; }
+      .fill { fill: #ffffff; }
+    }
+  </style>
+
+  <rect x="10" y="10" width="80" height="80" rx="18" class="stroke" stroke-width="8" />
+  
+  <path d="M 36 32 L 64 32" class="stroke" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 50 32 L 50 68" class="stroke" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M 36 68 L 64 68" class="stroke" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" />
+
+  <circle cx="50" cy="50" r="6" class="fill" />
+</svg>

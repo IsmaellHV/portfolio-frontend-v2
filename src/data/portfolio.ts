@@ -25,6 +25,8 @@ export interface Project {
   description: string;
   tags: string[];
   link?: string;
+  image?: string;
+  github?: string;
 }
 
 export interface About {
@@ -90,51 +92,24 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         company: 'Municipalidad Metropolitana de Lima',
         role: 'Analista Programador Senior',
         period: '2023-Presente',
-        description: [
-          'Desarrollo de APIs robustas y escalables.',
-          'Creacion de dashboards interactivos para analisis de datos.',
-          'Integraciones con servicios de terceros y optimizacion de performance.',
-        ],
+        description: ['Desarrollo de APIs robustas y escalables.', 'Creación de dashboards interactivos para analisis de datos.', 'Integraciones con servicios de terceros y optimizacion de performance.'],
       },
       {
         company: 'Dae Hipoteraria',
         role: 'Full-Stack Developer',
-        period: '2023-Presente',
-        description: [
-          'Desarrollo de APIs robustas y escalables.',
-          'Creacion de dashboards interactivos para analisis de datos.',
-          'Integraciones con servicios de terceros y optimizacion de performance.',
-        ],
+        period: '2025-Presente',
+        description: ['Desarrollo de APIs robustas y escalables.', 'Creación de dashboards interactivos para analisis de datos.', 'Integraciones con servicios de terceros y optimizacion de performance.'],
       },
     ],
     featuredProjects: [
       {
         id: '1',
-        title: 'Portafolio Astro',
-        description: 'Portfolio personal con arquitectura hexagonal y alto rendimiento.',
-        tags: ['Astro', 'Tailwind', 'TypeScript'],
-        link: '#',
-      },
-      {
-        id: '2',
-        title: 'Dashboard Analitico',
-        description: 'Plataforma de visualizacion de datos en tiempo real.',
-        tags: ['React', 'Node', 'Postgres'],
-        link: '#',
-      },
-      {
-        id: '3',
-        title: 'App Movil',
-        description: 'Aplicacion movil para gestion de tareas.',
-        tags: ['React Native', 'Expo'],
-        link: '#',
-      },
-      {
-        id: '4',
-        title: 'Chatbot IA',
-        description: 'Asistente virtual conversacional potenciado por LLMs.',
-        tags: ['Node', 'LLM', 'Vector DB'],
-        link: '#',
+        title: 'Portfolio v1',
+        description: 'Portfolio personal v1 construido con React, TailwindCSS, NodeJS y TypeScript.',
+        tags: ['React', 'Tailwind', 'NodeJS', 'TypeScript'],
+        link: 'https://v1.ismaelhv.com/',
+        github: 'https://github.com/IsmaellHV/portfolio-frontend-v1',
+        image: '/projetcs/portfolio-v1.png',
       },
     ],
   },
@@ -164,51 +139,24 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         company: 'Municipalidad Metropolitana de Lima',
         role: 'Senior Programmer Analyst',
         period: '2023-Present',
-        description: [
-          'Development of robust and scalable APIs.',
-          'Creation of interactive dashboards for data analysis.',
-          'Integrations with third-party services and performance optimization.',
-        ],
+        description: ['Development of robust and scalable APIs.', 'Creation of interactive dashboards for data analysis.', 'Integrations with third-party services and performance optimization.'],
       },
       {
         company: 'Dae Hipoteraria',
         role: 'Full-Stack Developer',
-        period: '2023-Present',
-        description: [
-          'Development of robust and scalable APIs.',
-          'Creation of interactive dashboards for data analysis.',
-          'Integrations with third-party services and performance optimization.',
-        ],
+        period: '2025-Present',
+        description: ['Development of robust and scalable APIs.', 'Creation of interactive dashboards for data analysis.', 'Integrations with third-party services and performance optimization.'],
       },
     ],
     featuredProjects: [
       {
         id: '1',
-        title: 'Astro Portfolio',
-        description: 'Personal portfolio with hexagonal architecture and high performance.',
-        tags: ['Astro', 'Tailwind', 'TypeScript'],
-        link: '#',
-      },
-      {
-        id: '2',
-        title: 'Analytical Dashboard',
-        description: 'Real-time data visualization platform.',
-        tags: ['React', 'Node', 'Postgres'],
-        link: '#',
-      },
-      {
-        id: '3',
-        title: 'Mobile App',
-        description: 'Mobile application for task management.',
-        tags: ['React Native', 'Expo'],
-        link: '#',
-      },
-      {
-        id: '4',
-        title: 'AI Chatbot',
-        description: 'Conversational virtual assistant powered by LLMs.',
-        tags: ['Node', 'LLM', 'Vector DB'],
-        link: '#',
+        title: 'Portfolio v1',
+        description: 'Personal portfolio v1 built with React, TailwindCSS, NodeJS and TypeScript.',
+        tags: ['React', 'Tailwind', 'NodeJS', 'TypeScript'],
+        link: 'https://v1.ismaelhv.com/',
+        github: 'https://github.com/IsmaellHV/portfolio-frontend-v1',
+        image: '/projetcs/portfolio-v1.png',
       },
     ],
   },

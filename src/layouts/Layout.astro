@@ -5,6 +5,7 @@ import '@fontsource/oxygen';
 import { routesForLocale } from '@/consts/routes';
 import { MESSAGES_BY_LOCALE, type Locale } from '@/data/portfolio';
 import { ENVIRONMENT } from '@/env';
+import Logo from '@/components/Logo.astro';
 
 interface Props {
   titleByLocale: Record<Locale, string>;
@@ -32,7 +33,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
     <meta name="viewport" content="width=device-width" />
     <meta name="keywords" content={ENVIRONMENT.APP.KEYWORDS} />
     <meta name="author" content={ENVIRONMENT.APP.AUTHOR} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{defaultTitle}</title>
 
@@ -75,7 +76,9 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
   >
     <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
       <div class="container mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-        <a href={routes.home} class="text-lg sm:text-xl font-bold tracking-tight hover:text-primary transition-colors">IHV</a>
+        <a href={routes.home} aria-label="Home" class="group flex items-center justify-center transition-transform hover:scale-105 active:scale-95">
+          <Logo />
+        </a>
 
         <div class="flex items-center gap-2 sm:gap-4 lg:gap-6">
           <nav class="hidden md:flex gap-6 lg:gap-8">
@@ -94,7 +97,14 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
           </nav>
 
           <div class="flex items-center gap-1 sm:gap-2 pl-2 sm:pl-4 border-l border-border/50">
-            <a data-cv-link href={defaultCvUrl} download target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">CV</a>
+            <a data-cv-link href={defaultCvUrl} download target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 rounded-md bg-white/5 border border-white/5 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors">
+              <span>CV</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" x2="12" y1="15" y2="3"/>
+              </svg>
+            </a>
 
             <a href="mailto:contact@ismael.dev" class="hidden lg:block text-sm font-medium text-primary hover:text-primary/80 transition-colors mr-2 lg:mr-4">
               <span data-i18n-locale="es">{messagesEs.nav.contact}</span>

@@ -1,0 +1,36 @@
+# Portfolio Frontend v2
+
+> A brief overview of the Portfolio Frontend v2 to help AI assistants (LLMs) understand the project.
+
+## Project Description
+Portfolio personal construido con Astro y Tailwind CSS, diseñado para ser rápido y responsivo.
+
+## Stack Technologies
+- **Framework**: [Astro 5](https://astro.build) (sin frameworks UI como React/Vue/Svelte, solo vanilla HTML/JS/CSS).
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com) (versión 4.x, usando `@theme` en CSS en lugar de `tailwind.config.js`).
+- **Language**: [TypeScript](https://www.typescriptlang.org/) para asegurar un tipado estático robusto.
+- **Deployment**: Configurado para construir en contenedor con Docker y servir archivos estáticos con NGINX.
+- **Linter**: ESLint + Prettier.
+
+## Codebase Structure
+The source code is located in the `src/` folder following Astro conventions:
+- `src/components/`: Componentes UI reutilizables de Astro.
+- `src/consts/`: Constantes y datos estáticos inyectados a través del sitio.
+- `src/data/`: Fuentes de datos (ej. JSON/TypeScript).
+- `src/layouts/`: Componentes Layout para envolver el contenido de la página.
+- `src/pages/`: Integrado al enrutador de Astro. Incluye la carpeta `en/` para soporte multilingüe.
+- `src/sections/`: Secciones grandes de la página (ej. `home`, `projects`).
+- `src/styles/`: Archivos CSS globales, donde configuramos Tailwind (`index.css`).
+
+## Important Rules for AI Assistants
+1. **Always use Astro 5 components**: Do NOT write or suggest React/Vue/Svelte syntax or components unless explicitly requested. Render everything via `.astro` components or standard HTML tags.
+2. **Tailwind v4 syntax**: Tailwind CSS 4 does not use a `tailwind.config.js` by default. Instead, design tokens and configurations are managed via CSS variables and the `@theme` directive in CSS. Use modern `v4.1.x` utility classes. 
+3. **TypeScript by default**: Always use TypeScript when creating `.ts` scripts or in the frontmatter `---` of `*.astro` files. Make sure to define proper interfaces for props (using `interface Props { ... }`).
+4. **Environment Variables**: Follow the `.env.example` structure for accessing `PUBLIC_APP_*` and `PUBLIC_SOCIAL_*` variables.
+5. **No inline scripts** without caution: When adding interactivity, prefer writing `<script>` tags in `.astro` components, which will be bundled and optimized automatically by Astro.
+
+## Development Scripts
+- `npm run dev`: Iniciar en `localhost:4321`.
+- `npm run build`: Genera archivos estáticos de producción en la carpeta `dist/`.
+- `npm run typecheck`: Validar tipos TypeScript.
+- `npm run lint`: Verificar que el código cumpla con las reglas de ESLint (+ fix con `lint:fix`).
