@@ -40,7 +40,7 @@ jobs:
         with:
           major_pattern: 'mayor'
           minor_pattern: 'feat'
-          format: '${major}.${minor}.${increment}'
+          version_format: '${major}.${minor}.${increment}'
         id: version
 
       - name: Set up Docker Buildx

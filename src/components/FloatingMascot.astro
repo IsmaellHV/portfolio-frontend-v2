@@ -317,7 +317,7 @@
           svg.classList.remove('active');
         }
       });
-      localStorage.setItem('selected-mascot', id);
+      localStorage.setItem('selected-mascot', id || '');
       menu.classList.remove('show');
     };
 
