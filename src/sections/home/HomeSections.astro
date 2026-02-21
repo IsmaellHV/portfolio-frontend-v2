@@ -32,7 +32,10 @@ const { dataByLocale, messagesByLocale } = Astro.props;
         <ProjectsSection
           projectsByLocale={{ es: dataByLocale.es.featuredProjects, en: dataByLocale.en.featuredProjects }}
           titleByLocale={{ es: dataByLocale.es.sections.projects, en: dataByLocale.en.sections.projects }}
-          viewAllLabelByLocale={{ es: messagesByLocale.es.actions.viewAllProjects, en: messagesByLocale.en.actions.viewAllProjects }}
+          viewAllLabelByLocale={{
+            es: messagesByLocale.es.actions.viewAllProjects,
+            en: messagesByLocale.en.actions.viewAllProjects,
+          }}
         />
       </div>
     </div>

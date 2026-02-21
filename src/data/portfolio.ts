@@ -92,13 +92,21 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         company: 'Municipalidad Metropolitana de Lima',
         role: 'Analista Programador Senior',
         period: '2023-Presente',
-        description: ['Desarrollo de APIs robustas y escalables.', 'Creación de dashboards interactivos para analisis de datos.', 'Integraciones con servicios de terceros y optimizacion de performance.'],
+        description: [
+          'Desarrollo de APIs robustas y escalables.',
+          'Creación de dashboards interactivos para analisis de datos.',
+          'Integraciones con servicios de terceros y optimizacion de performance.',
+        ],
       },
       {
         company: 'Dae Hipoteraria',
         role: 'Full-Stack Developer',
         period: '2025-Presente',
-        description: ['Desarrollo de APIs robustas y escalables.', 'Creación de dashboards interactivos para analisis de datos.', 'Integraciones con servicios de terceros y optimizacion de performance.'],
+        description: [
+          'Desarrollo de APIs robustas y escalables.',
+          'Creación de dashboards interactivos para analisis de datos.',
+          'Integraciones con servicios de terceros y optimizacion de performance.',
+        ],
       },
     ],
     featuredProjects: [
@@ -139,13 +147,21 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         company: 'Municipalidad Metropolitana de Lima',
         role: 'Senior Programmer Analyst',
         period: '2023-Present',
-        description: ['Development of robust and scalable APIs.', 'Creation of interactive dashboards for data analysis.', 'Integrations with third-party services and performance optimization.'],
+        description: [
+          'Development of robust and scalable APIs.',
+          'Creation of interactive dashboards for data analysis.',
+          'Integrations with third-party services and performance optimization.',
+        ],
       },
       {
         company: 'Dae Hipoteraria',
         role: 'Full-Stack Developer',
         period: '2025-Present',
-        description: ['Development of robust and scalable APIs.', 'Creation of interactive dashboards for data analysis.', 'Integrations with third-party services and performance optimization.'],
+        description: [
+          'Development of robust and scalable APIs.',
+          'Creation of interactive dashboards for data analysis.',
+          'Integrations with third-party services and performance optimization.',
+        ],
       },
     ],
     featuredProjects: [

@@ -17,14 +17,10 @@ const { aboutByLocale, titleByLocale } = Astro.props;
 
   <div class="space-y-3 sm:space-y-4 text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
     <div data-i18n-locale="es" class="space-y-3 sm:space-y-4">
-      {aboutByLocale.es.paragraphs.map((paragraph) => (
-        <p>{paragraph}</p>
-      ))}
+      {aboutByLocale.es.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
     </div>
     <div data-i18n-locale="en" class="space-y-3 sm:space-y-4">
-      {aboutByLocale.en.paragraphs.map((paragraph) => (
-        <p>{paragraph}</p>
-      ))}
+      {aboutByLocale.en.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
     </div>
   </div>
 </section>

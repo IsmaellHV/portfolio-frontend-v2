@@ -25,80 +25,126 @@ const backHref = '/';
   </div>
 
   <div data-i18n-locale="es" class="space-y-4">
-    {projectsByLocale.es.map((project) => {
-      const hasExternalLink = Boolean(project.link && project.link !== '#');
+    {
+      projectsByLocale.es.map((project) => {
+        const hasExternalLink = Boolean(project.link && project.link !== '#');
 
-      return (
-        <article class="group rounded-lg border border-border/70 p-5 sm:p-6 flex flex-col sm:flex-row gap-6 transition-colors hover:bg-muted/30">
-          {project.image && (
-            <div class="w-full sm:w-1/3 shrink-0 overflow-hidden rounded border border-border/50 bg-foreground/10 dark:bg-black/50">
-              <a href={hasExternalLink ? project.link : '#'} target={hasExternalLink ? '_blank' : undefined} rel={hasExternalLink ? 'noopener noreferrer' : undefined} class="block h-full">
-                <img src={project.image} alt={project.title} class="w-full aspect-video object-cover grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105" />
-              </a>
-            </div>
-          )}
-          <div class="flex-1">
-            <div class="flex flex-wrap items-center gap-3">
-              <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
-              {project.github && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-muted-foreground transition-colors hover:text-foreground">
-                  [GitHub]
+        return (
+          <article class="group rounded-lg border border-border/70 p-5 sm:p-6 flex flex-col sm:flex-row gap-6 transition-colors hover:bg-muted/30">
+            {project.image && (
+              <div class="w-full sm:w-1/3 shrink-0 overflow-hidden rounded border border-border/50 bg-foreground/10 dark:bg-black/50">
+                <a
+                  href={hasExternalLink ? project.link : '#'}
+                  target={hasExternalLink ? '_blank' : undefined}
+                  rel={hasExternalLink ? 'noopener noreferrer' : undefined}
+                  class="block h-full"
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full aspect-video object-cover grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
+                  />
+                </a>
+              </div>
+            )}
+            <div class="flex-1">
+              <div class="flex flex-wrap items-center gap-3">
+                <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-xs font-mono text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    [GitHub]
+                  </a>
+                )}
+              </div>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              {hasExternalLink && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  {visitProjectLabelByLocale.es} →
                 </a>
               )}
             </div>
-            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">{tag}</span>
-              ))}
-            </div>
-            {hasExternalLink && (
-              <a href={project.link} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground">
-                {visitProjectLabelByLocale.es} →
-              </a>
-            )}
-          </div>
-        </article>
-      );
-    })}
+          </article>
+        );
+      })
+    }
   </div>
 
   <div data-i18n-locale="en" class="space-y-4">
-    {projectsByLocale.en.map((project) => {
-      const hasExternalLink = Boolean(project.link && project.link !== '#');
+    {
+      projectsByLocale.en.map((project) => {
+        const hasExternalLink = Boolean(project.link && project.link !== '#');
 
-      return (
-        <article class="group rounded-lg border border-border/70 p-5 sm:p-6 flex flex-col sm:flex-row gap-6 transition-colors hover:bg-muted/30">
-          {project.image && (
-            <div class="w-full sm:w-1/3 shrink-0 overflow-hidden rounded border border-border/50 bg-foreground/10 dark:bg-black/50">
-              <a href={hasExternalLink ? project.link : '#'} target={hasExternalLink ? '_blank' : undefined} rel={hasExternalLink ? 'noopener noreferrer' : undefined} class="block h-full">
-                <img src={project.image} alt={project.title} class="w-full aspect-video object-cover grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105" />
-              </a>
-            </div>
-          )}
-          <div class="flex-1">
-            <div class="flex flex-wrap items-center gap-3">
-              <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
-              {project.github && (
-                <a href={project.github} target="_blank" rel="noopener noreferrer" class="text-xs font-mono text-muted-foreground transition-colors hover:text-foreground">
-                  [GitHub]
+        return (
+          <article class="group rounded-lg border border-border/70 p-5 sm:p-6 flex flex-col sm:flex-row gap-6 transition-colors hover:bg-muted/30">
+            {project.image && (
+              <div class="w-full sm:w-1/3 shrink-0 overflow-hidden rounded border border-border/50 bg-foreground/10 dark:bg-black/50">
+                <a
+                  href={hasExternalLink ? project.link : '#'}
+                  target={hasExternalLink ? '_blank' : undefined}
+                  rel={hasExternalLink ? 'noopener noreferrer' : undefined}
+                  class="block h-full"
+                >
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full aspect-video object-cover grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
+                  />
+                </a>
+              </div>
+            )}
+            <div class="flex-1">
+              <div class="flex flex-wrap items-center gap-3">
+                <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-xs font-mono text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    [GitHub]
+                  </a>
+                )}
+              </div>
+              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              {hasExternalLink && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                >
+                  {visitProjectLabelByLocale.en} →
                 </a>
               )}
             </div>
-            <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">{tag}</span>
-              ))}
-            </div>
-            {hasExternalLink && (
-              <a href={project.link} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground">
-                {visitProjectLabelByLocale.en} →
-              </a>
-            )}
-          </div>
-        </article>
-      );
-    })}
+          </article>
+        );
+      })
+    }
   </div>
 </section>

@@ -1,7 +1,15 @@
 ---
+
 ---
 
-<svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-zinc-900 dark:text-white">
+<svg
+  width="40"
+  height="40"
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  class="text-zinc-900 dark:text-white"
+>
   <style>
     .draw-frame {
       stroke-dasharray: 320;
@@ -15,26 +23,67 @@
       animation: pulse-dot 2s infinite;
     }
     @keyframes pulse-dot {
-      0%, 100% { opacity: 0.2; transform: scale(0.8); }
-      50% { opacity: 1; transform: scale(1.2); }
+      0%,
+      100% {
+        opacity: 0.2;
+        transform: scale(0.8);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
     }
   </style>
 
   <!-- Static faint frame -->
-  <rect x="10" y="10" width="80" height="80" rx="16" stroke="currentColor" stroke-width="4" class="opacity-10 transition-opacity duration-500 group-hover:opacity-30" />
-  
+  <rect
+    x="10"
+    y="10"
+    width="80"
+    height="80"
+    rx="16"
+    stroke="currentColor"
+    stroke-width="4"
+    class="opacity-10 transition-opacity duration-500 group-hover:opacity-30"></rect>
+
   <!-- Animated drawing frame on hover -->
-  <rect x="10" y="10" width="80" height="80" rx="16" stroke="currentColor" stroke-width="4" class="draw-frame opacity-0 group-hover:opacity-100" />
+  <rect
+    x="10"
+    y="10"
+    width="80"
+    height="80"
+    rx="16"
+    stroke="currentColor"
+    stroke-width="4"
+    class="draw-frame opacity-0 group-hover:opacity-100"></rect>
 
   <!-- Letter I - Top -->
-  <path d="M 38 32 L 62 32" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="origin-center transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-x-110" />
-  
+  <path
+    d="M 38 32 L 62 32"
+    stroke="currentColor"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="origin-center transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-x-110"></path>
+
   <!-- Letter I - Body -->
-  <path d="M 50 32 L 50 68" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="origin-center transition-transform duration-500 group-hover:scale-y-105" />
-  
+  <path
+    d="M 50 32 L 50 68"
+    stroke="currentColor"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="origin-center transition-transform duration-500 group-hover:scale-y-105"></path>
+
   <!-- Letter I - Bottom -->
-  <path d="M 38 68 L 62 68" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" class="origin-center transition-transform duration-500 group-hover:translate-y-1 group-hover:scale-x-110" />
+  <path
+    d="M 38 68 L 62 68"
+    stroke="currentColor"
+    stroke-width="8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    class="origin-center transition-transform duration-500 group-hover:translate-y-1 group-hover:scale-x-110"></path>
 
   <!-- Center Decorative Dot -->
-  <circle cx="50" cy="50" r="4" fill="currentColor" class="pulse-dot origin-center" />
+  <circle cx="50" cy="50" r="4" fill="currentColor" class="pulse-dot origin-center"></circle>
 </svg>

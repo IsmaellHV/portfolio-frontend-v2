@@ -163,7 +163,9 @@ html[data-locale='en'] [data-i18n-locale='es'] {
   height: 2.25rem;
   border-radius: 9999px;
   color: hsl(var(--foreground));
-  transition: color 160ms ease, background-color 160ms ease;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
 }
 
 .theme-toggle:hover {
@@ -174,7 +176,9 @@ html[data-locale='en'] [data-i18n-locale='es'] {
   position: absolute;
   width: 1.1rem;
   height: 1.1rem;
-  transition: transform 260ms ease, opacity 260ms ease;
+  transition:
+    transform 260ms ease,
+    opacity 260ms ease;
 }
 
 .theme-icon-moon {
