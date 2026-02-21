@@ -1,0 +1,424 @@
+---
+// src/components/FloatingMascot.astro
+---
+
+<div class="mascot-container" aria-hidden="true" id="draggble-mascot">
+  <!-- Menú de selección de mascota -->
+  <div class="mascot-menu" id="mascot-menu">
+    <button class="mascot-btn" data-mascot="astronaut" title="Astronauta">👨‍🚀</button>
+    <button class="mascot-btn" data-mascot="robot" title="Robot">🤖</button>
+    <button class="mascot-btn" data-mascot="ufo" title="OVNI">🛸</button>
+  </div>
+
+  <div class="mascot-floater">
+    <!-- ASTRONAUTA (Mejorado) -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="mascot-svg active"
+      data-id="astronaut"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M12 3a5 5 0 0 0-5 5v3a5 5 0 0 0 10 0V8a5 5 0 0 0-5-5z"></path>
+      <rect x="8" y="7" width="8" height="5" rx="2" fill="currentColor" fill-opacity="0.2" class="visor"></rect>
+      <path d="M8 16v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4"></path>
+      <path d="M7 11H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2"></path>
+      <path d="M17 11h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"></path>
+      <path d="M9 22v-3"></path>
+      <path d="M15 22v-3"></path>
+      <path d="M12 11h.01"></path>
+      <path d="M12 14h.01"></path>
+      <circle cx="12" cy="11" r="0.5" fill="currentColor"></circle>
+      <circle cx="12" cy="14" r="0.5" fill="currentColor"></circle>
+    </svg>
+
+    <!-- ROBOT -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="mascot-svg hidden"
+      data-id="robot"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <rect x="5" y="8" width="14" height="10" rx="3"></rect>
+      <path d="M12 2v6"></path>
+      <circle cx="12" cy="2" r="1.5" fill="currentColor" class="visor"></circle>
+      <circle cx="9" cy="12" r="1.5" fill="currentColor" class="visor"></circle>
+      <circle cx="15" cy="12" r="1.5" fill="currentColor" class="visor"></circle>
+      <path d="M8 18v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3"></path>
+      <path d="M2 13h3"></path>
+      <path d="M19 13h3"></path>
+      <path d="M8 13v.01"></path>
+      <path d="M16 13v.01"></path>
+    </svg>
+
+    <!-- OVNI (UFO) -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="mascot-svg hidden"
+      data-id="ufo"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M12 4a5 5 0 0 0-4.58 3h9.16A5 5 0 0 0 12 4z" fill="currentColor" fill-opacity="0.2" class="visor"></path>
+      <path d="M2 12c0 2 4.5 4 10 4s10-2 10-4-4.5-4-10-4S2 10 2 12z"></path>
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" class="visor"></circle>
+      <circle cx="6.5" cy="11.5" r="1.5" fill="currentColor" class="visor"></circle>
+      <circle cx="17.5" cy="11.5" r="1.5" fill="currentColor" class="visor"></circle>
+      <path d="M9 15.5l-2 4"></path>
+      <path d="M15 15.5l2 4"></path>
+      <path d="M12 8v.01"></path>
+    </svg>
+
+    <div class="mascot-glow"></div>
+  </div>
+</div>
+
+<style>
+  .mascot-container {
+    position: fixed;
+    top: 15vh;
+    left: -100px; /* Empieza fuera de pantalla */
+    z-index: 50;
+    cursor: grab;
+    touch-action: none;
+    animation: entrance 12s linear forwards;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  .mascot-container:active {
+    cursor: grabbing;
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+
+  .mascot-container:hover {
+    opacity: 0.9;
+  }
+
+  :global(.dark) .mascot-container {
+    opacity: 0.8;
+  }
+
+  :global(.dark) .mascot-container:hover,
+  :global(.dark) .mascot-container:active {
+    opacity: 1;
+  }
+
+  /* Menú Flotante */
+  .mascot-menu {
+    position: absolute;
+    top: -55px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+    padding: 6px;
+    border-radius: 20px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .mascot-menu.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) scale(1);
+  }
+
+  .mascot-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition:
+      background 0.2s,
+      transform 0.2s;
+  }
+
+  .mascot-btn:hover {
+    background: hsl(var(--accent));
+    transform: scale(1.15);
+  }
+
+  .mascot-floater {
+    animation: float-bob 6s ease-in-out infinite;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .mascot-svg {
+    width: 60px;
+    height: 60px;
+    color: hsl(var(--foreground));
+    filter: drop-shadow(0 0 5px rgba(100, 100, 100, 0.2));
+    z-index: 2;
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+  }
+
+  .mascot-svg.hidden {
+    display: none;
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  .mascot-svg.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1);
+    animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  :global(.dark) .mascot-svg {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+  }
+
+  .mascot-glow {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background: hsl(var(--foreground));
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.4;
+    z-index: 1;
+    animation: pulse-glow 3s ease-in-out infinite alternate;
+  }
+
+  .visor {
+    animation: pulse-visor 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes entrance {
+    0% {
+      transform: translate3d(-100px, 0, 0) rotate(20deg);
+    }
+    100% {
+      transform: translate3d(85vw, 15vh, 0) rotate(-10deg);
+    }
+  }
+
+  .mascot-container.is-dragged {
+    animation: none !important;
+  }
+
+  @keyframes float-bob {
+    0%,
+    100% {
+      transform: translateY(0) scale(1) rotate(0deg);
+    }
+    33% {
+      transform: translateY(-8px) scale(1.02) rotate(4deg);
+    }
+    66% {
+      transform: translateY(8px) scale(0.98) rotate(-4deg);
+    }
+  }
+
+  @keyframes pulse-visor {
+    0% {
+      fill-opacity: 0.2;
+    }
+    100% {
+      fill-opacity: 0.7;
+    }
+  }
+
+  @keyframes pulse-glow {
+    0% {
+      opacity: 0.1;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 0.5;
+      transform: scale(1.5);
+    }
+  }
+
+  @keyframes pop-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(-20deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .mascot-svg {
+      width: 45px;
+      height: 45px;
+    }
+    @keyframes entrance {
+      0% {
+        transform: translate3d(-100px, 0, 0) rotate(15deg);
+      }
+      100% {
+        transform: translate3d(60vw, 10vh, 0) rotate(-5deg);
+      }
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mascot = document.getElementById('draggble-mascot');
+    const menu = document.getElementById('mascot-menu');
+    const btns = document.querySelectorAll('.mascot-btn');
+    const svgs = document.querySelectorAll('.mascot-svg');
+
+    if (!mascot || !menu) return;
+
+    let isDragging = false;
+    let hasMoved = false;
+    let startX = 0;
+    let startY = 0;
+    let currentLeft = 0;
+    let currentTop = 0;
+
+    // --- Lógica de Selección de Mascota ---
+    const changeMascot = (id: string | null) => {
+      svgs.forEach((svg) => {
+        if (svg.getAttribute('data-id') === id) {
+          svg.classList.remove('hidden');
+          svg.classList.add('active');
+        } else {
+          svg.classList.add('hidden');
+          svg.classList.remove('active');
+        }
+      });
+      localStorage.setItem('selected-mascot', id);
+      menu.classList.remove('show');
+    };
+
+    // Restaurar mascota guardada
+    const saved = localStorage.getItem('selected-mascot');
+    if (saved) changeMascot(saved);
+
+    btns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        changeMascot(btn.getAttribute('data-mascot'));
+      });
+    });
+
+    // --- Lógica de Arrastre ---
+    const stopAnimationAndLockPostion = () => {
+      if (!mascot.classList.contains('is-dragged')) {
+        const rect = mascot.getBoundingClientRect();
+        mascot.classList.add('is-dragged');
+        mascot.style.left = `${rect.left}px`;
+        mascot.style.top = `${rect.top}px`;
+        mascot.style.transform = 'none';
+      }
+    };
+
+    const dragStart = (e: MouseEvent | TouchEvent) => {
+      // Ignorar si se clica el menú
+      if (e.target instanceof Node && menu.contains(e.target)) return;
+
+      stopAnimationAndLockPostion();
+
+      currentLeft = parseFloat(mascot.style.left) || mascot.getBoundingClientRect().left;
+      currentTop = parseFloat(mascot.style.top) || mascot.getBoundingClientRect().top;
+
+      if ('touches' in e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      } else {
+        startX = e.clientX;
+        startY = e.clientY;
+      }
+      isDragging = true;
+      hasMoved = false;
+    };
+
+    const dragEnd = (e: MouseEvent | TouchEvent) => {
+      isDragging = false;
+      // Si no se movió casi nada, se considera un click normal para abrir el menú
+      if (!hasMoved && e.target instanceof Node && !menu.contains(e.target)) {
+        menu.classList.toggle('show');
+      }
+    };
+
+    const drag = (e: MouseEvent | TouchEvent) => {
+      if (!isDragging) return;
+
+      e.preventDefault();
+
+      let clientX, clientY;
+      if ('touches' in e) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+
+      const dx = clientX - startX;
+      const dy = clientY - startY;
+
+      // Umbral para considerar que se está arrastrando y no clicando
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+        hasMoved = true;
+        menu.classList.remove('show'); // Esconde el menú si estás arrastrando
+      }
+
+      mascot.style.left = `${currentLeft + dx}px`;
+      mascot.style.top = `${currentTop + dy}px`;
+    };
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', (e: MouseEvent) => {
+      if (e.target instanceof Node && !mascot.contains(e.target) && !isDragging) {
+        menu.classList.remove('show');
+      }
+    });
+
+    // Eventos Mouse
+    mascot.addEventListener('mousedown', dragStart);
+    document.addEventListener('mouseup', dragEnd);
+    document.addEventListener('mousemove', drag, { passive: false });
+
+    // Eventos Touch (Móviles)
+    mascot.addEventListener('touchstart', dragStart, { passive: false });
+    document.addEventListener('touchend', dragEnd);
+    document.addEventListener('touchmove', drag, { passive: false });
+
+    mascot.addEventListener('animationend', (e) => {
+      if (e.animationName === 'entrance') {
+        stopAnimationAndLockPostion();
+      }
+    });
+  });
+</script>

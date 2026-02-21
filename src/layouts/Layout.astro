@@ -6,6 +6,7 @@ import { routesForLocale } from '@/consts/routes';
 import { MESSAGES_BY_LOCALE, type Locale } from '@/data/portfolio';
 import { ENVIRONMENT } from '@/env';
 import Logo from '@/components/Logo.astro';
+import FloatingMascot from '@/components/FloatingMascot.astro';
 
 interface Props {
   titleByLocale: Record<Locale, string>;
@@ -384,5 +385,6 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
         });
       });
     </script>
+    <FloatingMascot />
   </body>
 </html>
