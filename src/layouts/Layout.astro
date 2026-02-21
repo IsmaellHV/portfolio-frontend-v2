@@ -37,6 +37,23 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
     <meta name="generator" content={Astro.generator} />
     <title>{defaultTitle}</title>
 
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || Astro.url.origin).toString()} />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        mainEntity: {
+          '@type': 'Person',
+          name: 'Ismael Hurtado Vargas',
+          jobTitle: 'Full-Stack Developer',
+          url: Astro.site?.toString() || Astro.url.origin,
+          sameAs: [ENVIRONMENT.SOCIAL.GITHUB, ENVIRONMENT.SOCIAL.LINKEDIN, ENVIRONMENT.SOCIAL.TWITTER].filter(Boolean),
+        },
+      })}
+    />
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={defaultTitle} />
