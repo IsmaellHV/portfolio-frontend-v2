@@ -35,9 +35,6 @@ jobs:
       - name: Run typecheck
         run: npm run typecheck
 
-      - name: Build Astro app
-        run: npm run build
-
       - name: Git Semantic Version
         uses: PaulHatch/semantic-version@v5.4.0
         with:
@@ -49,24 +46,19 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Docker login
-        env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker Image
-        env:
-          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
-          NEW_VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          docker build -t "$PROJECT_NAME:$NEW_VERSION" .
-          docker build -t "$PROJECT_NAME:latest" .
-
-      - name: Push Docker Image
-        env:
-          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
-          NEW_VERSION: ${{ steps.version.outputs.version }}
-        run: |
-          docker push "$PROJECT_NAME:$NEW_VERSION"
-          docker push "$PROJECT_NAME:latest"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.PROJECT_NAME }}:${{ steps.version.outputs.version }}
+            ${{ secrets.PROJECT_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
