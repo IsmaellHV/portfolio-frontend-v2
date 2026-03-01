@@ -4,7 +4,7 @@ import '@fontsource/oxygen-mono';
 import '@fontsource/oxygen';
 import { routesForLocale } from '@/consts/routes';
 import { MESSAGES_BY_LOCALE, type Locale } from '@/data/portfolio';
-import { ENVIRONMENT } from '@/env';
+import { ENVIRONMENT } from '@/env/index';
 import Logo from '@/components/Logo.astro';
 import FloatingMascot from '@/components/FloatingMascot.astro';
 
@@ -38,7 +38,10 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
     <meta name="generator" content={Astro.generator} />
     <title>{defaultTitle}</title>
 
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site || Astro.url.origin).toString()} />
+    <link
+      rel="canonical"
+      href={new URL(Astro.url.pathname, ENVIRONMENT.APP.URL || Astro.site || Astro.url.origin).toString()}
+    />
 
     <script
       type="application/ld+json"
@@ -49,20 +52,26 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
           '@type': 'Person',
           name: 'Ismael Hurtado Vargas',
           jobTitle: 'Full-Stack Developer',
-          url: Astro.site?.toString() || Astro.url.origin,
+          url: ENVIRONMENT.APP.URL || Astro.site?.toString() || Astro.url.origin,
           sameAs: [ENVIRONMENT.SOCIAL.GITHUB, ENVIRONMENT.SOCIAL.LINKEDIN, ENVIRONMENT.SOCIAL.TWITTER].filter(Boolean),
         },
       })}
     />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
+    <meta
+      property="og:url"
+      content={new URL(Astro.url.pathname, ENVIRONMENT.APP.URL || Astro.site || Astro.url.origin).toString()}
+    />
     <meta property="og:title" content={defaultTitle} />
     <meta property="og:description" content={defaultDescription} />
     <meta property="og:image" content={ENVIRONMENT.META.OG_IMAGE} />
 
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
+    <meta
+      property="twitter:url"
+      content={new URL(Astro.url.pathname, ENVIRONMENT.APP.URL || Astro.site || Astro.url.origin).toString()}
+    />
     <meta property="twitter:title" content={defaultTitle} />
     <meta property="twitter:description" content={defaultDescription} />
     <meta property="twitter:image" content={ENVIRONMENT.META.OG_IMAGE} />
