@@ -164,13 +164,14 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
               </svg>
             </a>
 
-            <a
-              href="mailto:contact@ismael.dev"
-              class="hidden lg:block text-sm font-medium text-primary hover:text-primary/80 transition-colors mr-2 lg:mr-4"
+            <button
+              type="button"
+              onclick="window.location.href = 'mailto:' + 'contact' + '@' + 'ismael.dev'"
+              class="hidden lg:block text-sm font-medium text-primary hover:text-primary/80 transition-colors mr-2 lg:mr-4 cursor-pointer"
             >
               <span data-i18n-locale="es">{messagesEs.nav.contact}</span>
               <span data-i18n-locale="en">{messagesEn.nav.contact}</span>
-            </a>
+            </button>
 
             <button
               type="button"
