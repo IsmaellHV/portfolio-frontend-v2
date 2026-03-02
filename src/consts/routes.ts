@@ -4,6 +4,6 @@ export const routesForLocale = () => {
     about: '/#about',
     experience: '/#experience',
     projectsAnchor: '/#projects',
-    projects: '/projects',
+    projects: '/projects/',
   };
 };

@@ -11,7 +11,7 @@ interface Props {
 }
 
 const { projectsByLocale, titleByLocale, viewAllLabelByLocale } = Astro.props;
-const projectsHref = '/projects';
+const projectsHref = '/projects/';
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/projects/*.{jpeg,jpg,png,gif}');
 ---
 
