@@ -366,7 +366,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
         applyLocale(nextLocale, { persist: true, preserveHash: false });
       });
 
-      document.addEventListener('DOMContentLoaded', () => {
+      const initScroll = () => {
         if (window.location.hash) requestAnimationFrame(() => scrollToHashTarget('auto'));
         const links = document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]');
 
@@ -392,7 +392,9 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
             scrollToHashTarget('smooth', targetId);
           });
         });
-      });
+      };
+
+      initScroll();
     </script>
     <FloatingMascot />
   </body>

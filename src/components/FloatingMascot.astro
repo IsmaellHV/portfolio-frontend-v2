@@ -293,13 +293,17 @@
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  const initMascot = () => {
     const mascot = document.getElementById('draggble-mascot');
     const menu = document.getElementById('mascot-menu');
     const btns = document.querySelectorAll('.mascot-btn');
     const svgs = document.querySelectorAll('.mascot-svg');
 
     if (!mascot || !menu) return;
+
+    // Prevenir múltiple asignación si se usa Astro page transitions
+    if (mascot.dataset.initialized) return;
+    mascot.dataset.initialized = 'true';
 
     let isDragging = false;
     let hasMoved = false;
@@ -319,7 +323,7 @@
           svg.classList.remove('active');
         }
       });
-      localStorage.setItem('selected-mascot', id || '');
+      if (id) localStorage.setItem('selected-mascot', id);
       menu.classList.remove('show');
     };
 
@@ -366,6 +370,7 @@
     };
 
     const dragEnd = () => {
+      if (!isDragging) return; // Si no estaba arrastrando la mascota, ignorar
       isDragging = false;
       // Si no se movió casi nada, se considera un click normal para abrir el menú
       if (!hasMoved) {
@@ -422,5 +427,9 @@
         stopAnimationAndLockPostion();
       }
     });
-  });
+  };
+
+  // Los scripts <script> en Astro (type="module") se ejecutan deferidos por defecto,
+  // por lo que el DOM ya está construido. Lanzamos inmediatamente:
+  initMascot();
 </script>
