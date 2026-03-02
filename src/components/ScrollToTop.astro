@@ -1,0 +1,51 @@
+---
+
+---
+
+<button
+  id="scroll-to-top"
+  aria-label="Volver arriba"
+  class="fixed bottom-6 right-6 z-50 flex h-12 w-12 translate-y-20 cursor-pointer items-center justify-center rounded-full bg-foreground text-background opacity-0 shadow-lg transition-all duration-500 hover:bg-foreground/90 hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-foreground focus:ring-offset-2 dark:bg-foreground dark:text-background dark:focus:ring-offset-background"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="m18 15-6-6-6 6"></path>
+  </svg>
+</button>
+
+<script>
+  const initScrollToTop = () => {
+    const btn = document.getElementById('scroll-to-top');
+    if (!btn) return;
+
+    // Handle scroll events directly
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        btn.classList.remove('translate-y-20', 'opacity-0');
+        btn.classList.add('translate-y-0', 'opacity-100');
+      } else {
+        btn.classList.add('translate-y-20', 'opacity-0');
+        btn.classList.remove('translate-y-0', 'opacity-100');
+      }
+    });
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Remove hash from URL without scrolling
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    });
+  };
+
+  initScrollToTop();
+</script>

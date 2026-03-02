@@ -7,6 +7,7 @@ import { MESSAGES_BY_LOCALE, type Locale } from '@/data/portfolio';
 import { ENVIRONMENT } from '@/env/index';
 import Logo from '@/components/Logo.astro';
 import FloatingMascot from '@/components/FloatingMascot.astro';
+import ScrollToTop from '@/components/ScrollToTop.astro';
 
 interface Props {
   titleByLocale: Record<Locale, string>;
@@ -397,5 +398,6 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
       initScroll();
     </script>
     <FloatingMascot />
+    <ScrollToTop />
   </body>
 </html>

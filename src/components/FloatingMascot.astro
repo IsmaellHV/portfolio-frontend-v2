@@ -89,12 +89,12 @@
 <style>
   .mascot-container {
     position: fixed;
-    top: 15vh;
+    bottom: 20px;
     left: -100px; /* Empieza fuera de pantalla */
     z-index: 50;
     cursor: grab;
     touch-action: none;
-    animation: entrance 12s linear forwards;
+    animation: entrance 8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     opacity: 0.5;
     transition: opacity 0.3s ease;
   }
@@ -221,10 +221,10 @@
 
   @keyframes entrance {
     0% {
-      transform: translate3d(-100px, 0, 0) rotate(20deg);
+      transform: translate3d(-100px, 20px, 0) rotate(20deg);
     }
     100% {
-      transform: translate3d(85vw, 15vh, 0) rotate(-10deg);
+      transform: translate3d(130px, 0, 0) rotate(5deg);
     }
   }
 
@@ -283,10 +283,10 @@
     }
     @keyframes entrance {
       0% {
-        transform: translate3d(-100px, 0, 0) rotate(15deg);
+        transform: translate3d(-100px, 20px, 0) rotate(15deg);
       }
       100% {
-        transform: translate3d(60vw, 10vh, 0) rotate(-5deg);
+        transform: translate3d(120px, -20px, 0) rotate(5deg);
       }
     }
   }
