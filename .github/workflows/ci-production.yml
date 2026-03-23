@@ -45,7 +45,7 @@ jobs:
         run: npm run build
 
       - name: Git Semantic Version
-        uses: PaulHatch/semantic-version@v5.4.0
+        uses: PaulHatch/semantic-version@v6.0.2
         with:
           major_pattern: 'mayor'
           minor_pattern: 'feat'
