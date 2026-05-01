@@ -1,0 +1,31 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getPortfolioData, MESSAGES_BY_LOCALE } from '@/data/portfolio';
+import ExperienceDetailSection from '@/sections/experience/ExperienceDetailSection.astro';
+
+const dataByLocale = {
+  es: getPortfolioData('es'),
+  en: getPortfolioData('en'),
+};
+
+const titleByLocale = {
+  es: `${MESSAGES_BY_LOCALE.es.pages.experienceTitle} - ${dataByLocale.es.profile.name}`,
+  en: `${MESSAGES_BY_LOCALE.en.pages.experienceTitle} - ${dataByLocale.en.profile.name}`,
+};
+
+const descriptionByLocale = {
+  es: `Experiencia profesional de ${dataByLocale.es.profile.name}.`,
+  en: `Professional experience of ${dataByLocale.en.profile.name}.`,
+};
+---
+
+<Layout titleByLocale={titleByLocale} descriptionByLocale={descriptionByLocale} defaultLocale="es">
+  <ExperienceDetailSection
+    experiencesByLocale={{ es: dataByLocale.es.experiences, en: dataByLocale.en.experiences }}
+    titleByLocale={{
+      es: MESSAGES_BY_LOCALE.es.pages.experienceTitle,
+      en: MESSAGES_BY_LOCALE.en.pages.experienceTitle,
+    }}
+    backLabelByLocale={{ es: MESSAGES_BY_LOCALE.es.actions.backHome, en: MESSAGES_BY_LOCALE.en.actions.backHome }}
+  />
+</Layout>

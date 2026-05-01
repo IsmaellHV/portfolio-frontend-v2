@@ -2,88 +2,18 @@
 
 ---
 
-<svg
-  width="40"
-  height="40"
-  viewBox="0 0 100 100"
-  fill="none"
-  xmlns="http://www.w3.org/2000/svg"
-  class="text-zinc-900 dark:text-white"
->
-  <style>
-    .draw-frame {
-      stroke-dasharray: 320;
-      stroke-dashoffset: 320;
-      transition: stroke-dashoffset 0.8s ease-in-out;
-    }
-    .group:hover .draw-frame {
-      stroke-dashoffset: 0;
-    }
-    .pulse-dot {
-      animation: pulse-dot 2s infinite;
-    }
-    @keyframes pulse-dot {
-      0%,
-      100% {
-        opacity: 0.2;
-        transform: scale(0.8);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.2);
-      }
-    }
-  </style>
-
-  <!-- Static faint frame -->
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
   <rect
-    x="10"
-    y="10"
-    width="80"
-    height="80"
-    rx="16"
+    x="6"
+    y="6"
+    width="20"
+    height="20"
     stroke="currentColor"
-    stroke-width="4"
-    class="opacity-10 transition-opacity duration-500 group-hover:opacity-30"></rect>
-
-  <!-- Animated drawing frame on hover -->
-  <rect
-    x="10"
-    y="10"
-    width="80"
-    height="80"
-    rx="16"
-    stroke="currentColor"
-    stroke-width="4"
-    class="draw-frame opacity-0 group-hover:opacity-100"></rect>
-
-  <!-- Letter I - Top -->
-  <path
-    d="M 38 32 L 62 32"
-    stroke="currentColor"
-    stroke-width="8"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="origin-center transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-x-110"></path>
-
-  <!-- Letter I - Body -->
-  <path
-    d="M 50 32 L 50 68"
-    stroke="currentColor"
-    stroke-width="8"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="origin-center transition-transform duration-500 group-hover:scale-y-105"></path>
-
-  <!-- Letter I - Bottom -->
-  <path
-    d="M 38 68 L 62 68"
-    stroke="currentColor"
-    stroke-width="8"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class="origin-center transition-transform duration-500 group-hover:translate-y-1 group-hover:scale-x-110"></path>
-
-  <!-- Center Decorative Dot -->
-  <circle cx="50" cy="50" r="4" fill="currentColor" class="pulse-dot origin-center"></circle>
+    stroke-width="1.25"
+    transform="rotate(45 16 16)"
+    opacity="0.35"
+  ></rect>
+  <rect x="11.5" y="9" width="1.6" height="14" fill="currentColor"></rect>
+  <rect x="19.4" y="9" width="1.6" height="14" fill="currentColor"></rect>
+  <rect x="13.1" y="15.2" width="6.3" height="1.6" fill="hsl(var(--brand))"></rect>
 </svg>

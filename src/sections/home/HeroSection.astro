@@ -1,17 +1,20 @@
 ---
-import type { Locale, Profile } from '@/data/portfolio';
+import type { Locale, Profile, Stat } from '@/data/portfolio';
 
 interface Props {
   profileByLocale: Record<Locale, Profile>;
+  statsByLocale: Record<Locale, Stat[]>;
+  workLabelByLocale: Record<Locale, string>;
+  seeProjectsLabelByLocale: Record<Locale, string>;
 }
 
-const { profileByLocale } = Astro.props;
+const { profileByLocale, statsByLocale, workLabelByLocale, seeProjectsLabelByLocale } = Astro.props;
 
 const splitName = (name: string) => {
-  const nameParts = name.split(' ');
+  const parts = name.split(' ');
   return {
-    firstName: nameParts[0] || name,
-    secondName: nameParts[1] || '',
+    first: parts[0] || name,
+    last: parts.slice(1).join(' '),
   };
 };
 
@@ -23,74 +26,100 @@ const namesByLocale = {
 const socials = profileByLocale.es.socials;
 ---
 
-<section id="hero" class="space-y-6 sm:space-y-8 lg:space-y-12 animate-in fade-in slide-in-from-left-4 duration-1000">
-  <div class="space-y-3 sm:space-y-4 lg:space-y-6">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground leading-tight">
-      <span data-i18n-locale="es">
-        {namesByLocale.es.firstName}<br />
-        <span class="text-foreground/50">{namesByLocale.es.secondName}</span>
-      </span>
-      <span data-i18n-locale="en">
-        {namesByLocale.en.firstName}<br />
-        <span class="text-foreground/50">{namesByLocale.en.secondName}</span>
-      </span>
-    </h1>
-    <h2 class="text-sm sm:text-base md:text-lg text-foreground/70 font-medium max-w-sm">
-      <span data-i18n-locale="es">{profileByLocale.es.role}</span>
-      <span data-i18n-locale="en">{profileByLocale.en.role}</span>
-    </h2>
-  </div>
+<section id="hero" class="relative pt-28 pb-20 sm:pt-36 sm:pb-24 lg:pt-44 lg:pb-32">
+  <div class="container-editorial">
+    <div class="space-y-7 sm:space-y-10">
+      <div class="flex flex-wrap items-center gap-3 sm:gap-4 font-mono text-[11.5px] uppercase tracking-[0.14em] text-muted-foreground">
+        <span data-i18n-locale="es">{profileByLocale.es.status}</span>
+        <span data-i18n-locale="en">{profileByLocale.en.status}</span>
+        <span class="text-foreground/30" aria-hidden="true">—</span>
+        <span data-i18n-locale="es">{profileByLocale.es.role}</span>
+        <span data-i18n-locale="en">{profileByLocale.en.role}</span>
+      </div>
 
-  <p class="text-sm sm:text-base text-muted-foreground max-w-md leading-relaxed">
-    <span data-i18n-locale="es">{profileByLocale.es.summary}</span>
-    <span data-i18n-locale="en">{profileByLocale.en.summary}</span>
-  </p>
+      <h1 class="font-serif font-light leading-[0.92] tracking-[-0.045em] text-[clamp(64px,11vw,168px)]">
+        <span data-i18n-locale="es">
+          {namesByLocale.es.first}<span class="text-brand" style="color: hsl(var(--brand));">.</span>
+          <span class="block italic font-light text-muted-foreground">{namesByLocale.es.last}</span>
+        </span>
+        <span data-i18n-locale="en">
+          {namesByLocale.en.first}<span style="color: hsl(var(--brand));">.</span>
+          <span class="block italic font-light text-muted-foreground">{namesByLocale.en.last}</span>
+        </span>
+      </h1>
 
-  <div class="flex flex-wrap gap-4 pt-1 sm:pt-2 lg:pt-4">
-    {
-      socials.map((social) => (
-        <a
-          href={social.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={social.platform}
-          class="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-        >
-          {social.platform === 'GitHub' && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.03c3.15-.38 6.5-1.4 6.5-7.17a5.1 5.1 0 0 0-1.4-3.5 4.7 4.7 0 0 0-.1-3.5s-1.1-.35-3.5 1.25a11.3 11.3 0 0 0-6 0C5.1 3.5 4 3.85 4 3.85a4.7 4.7 0 0 0-.1 3.5 5.1 5.1 0 0 0-1.4 3.5c0 5.75 3.35 6.79 6.5 7.17A4.8 4.8 0 0 0 8 18v4" />
+      <div class="grid gap-10 pt-4 sm:grid-cols-[1fr_1.2fr] sm:items-end sm:gap-14">
+        <p class="font-serif text-[20px] sm:text-[22px] font-light leading-[1.4] max-w-[28ch] text-foreground">
+          <span data-i18n-locale="es">{profileByLocale.es.tagline}</span>
+          <span data-i18n-locale="en">{profileByLocale.en.tagline}</span>
+        </p>
+
+        <div class="flex gap-8 sm:gap-12 border-t pt-5" style="border-color: hsl(var(--line));">
+          {
+            statsByLocale.es.map((stat, idx) => (
+              <div class="flex flex-col gap-1">
+                <span class="font-serif text-[34px] sm:text-[38px] font-normal leading-none tracking-[-0.02em]">
+                  {stat.num}
+                </span>
+                <span class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground" data-i18n-locale="es">
+                  {stat.label}
+                </span>
+                <span class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground" data-i18n-locale="en">
+                  {statsByLocale.en[idx]?.label}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 pt-6 sm:gap-4">
+        <a data-email-link href="#" class="btn btn-primary">
+          <span data-i18n-locale="es">{workLabelByLocale.es}</span>
+          <span data-i18n-locale="en">{workLabelByLocale.en}</span>
+          <span class="arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 17L17 7M9 7h8v8"></path>
             </svg>
-          )}
-          {social.platform === 'LinkedIn' && (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-              <rect x="2" y="9" width="4" height="12" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-          )}
-          {social.platform}
+          </span>
         </a>
-      ))
-    }
+        <a href="#projects" class="btn">
+          <span data-i18n-locale="es">{seeProjectsLabelByLocale.es}</span>
+          <span data-i18n-locale="en">{seeProjectsLabelByLocale.en}</span>
+          <span class="arrow" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </span>
+        </a>
+
+        <div class="ml-auto flex items-center gap-2">
+          {
+            socials.map((social) => (
+              <a
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.platform}
+                title={social.platform}
+                class="inline-flex h-[42px] w-[42px] items-center justify-center rounded-full border text-muted-foreground transition-all hover:-translate-y-0.5 hover:text-foreground"
+                style="border-color: hsl(var(--line));"
+              >
+                {social.platform === 'GitHub' && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.72-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.49-1.11-1.49-.91-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.36-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.43 9.43 0 0112 6.84c.85.004 1.71.12 2.51.34 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.81-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.48-.01 2.82 0 .27.18.6.69.49C19.14 20.61 22 16.78 22 12.25 22 6.58 17.52 2 12 2z" />
+                  </svg>
+                )}
+                {social.platform === 'LinkedIn' && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM8.34 17H5.67V9.83h2.67V17zm-1.34-8.17a1.55 1.55 0 110-3.1 1.55 1.55 0 010 3.1zM18.34 17h-2.67v-3.5c0-.83-.02-1.9-1.16-1.9-1.16 0-1.34.9-1.34 1.84V17h-2.66V9.83h2.55v.98h.04a2.8 2.8 0 012.52-1.38c2.69 0 3.19 1.77 3.19 4.07V17z" />
+                  </svg>
+                )}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
   </div>
 </section>

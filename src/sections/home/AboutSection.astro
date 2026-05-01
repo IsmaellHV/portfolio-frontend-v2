@@ -3,24 +3,79 @@ import type { About, Locale } from '@/data/portfolio';
 
 interface Props {
   aboutByLocale: Record<Locale, About>;
-  titleByLocale: Record<Locale, string>;
+  kickerByLocale: Record<Locale, string>;
+  headlineByLocale: Record<Locale, string>;
 }
 
-const { aboutByLocale, titleByLocale } = Astro.props;
+const { aboutByLocale, kickerByLocale, headlineByLocale } = Astro.props;
+
+const splitHeadline = (s: string) => {
+  const parts = s.split(' ');
+  const head = parts.slice(0, 3).join(' ');
+  const tail = parts.slice(3).join(' ');
+  return { head, tail };
+};
+
+const headByLocale = {
+  es: splitHeadline(headlineByLocale.es),
+  en: splitHeadline(headlineByLocale.en),
+};
 ---
 
-<section id="about" class="space-y-4 sm:space-y-6 lg:space-y-8">
-  <h2 class="text-xs sm:text-sm font-medium tracking-wider uppercase text-foreground/50">
-    <span data-i18n-locale="es">{titleByLocale.es}</span>
-    <span data-i18n-locale="en">{titleByLocale.en}</span>
+<div id="about" class="space-y-6">
+  <span class="eyebrow">
+    <span data-i18n-locale="es">{kickerByLocale.es}</span>
+    <span data-i18n-locale="en">{kickerByLocale.en}</span>
+  </span>
+  <h2 class="section-title">
+    <span data-i18n-locale="es">
+      {headByLocale.es.head}<br /><em>{headByLocale.es.tail}</em>
+    </span>
+    <span data-i18n-locale="en">
+      {headByLocale.en.head}<br /><em>{headByLocale.en.tail}</em>
+    </span>
   </h2>
 
-  <div class="space-y-3 sm:space-y-4 text-xs sm:text-sm md:text-base text-muted-foreground leading-relaxed">
-    <div data-i18n-locale="es" class="space-y-3 sm:space-y-4">
-      {aboutByLocale.es.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+  <div class="space-y-4 pt-2">
+    <div data-i18n-locale="es" class="space-y-4">
+      {
+        aboutByLocale.es.paragraphs.map((p) => (
+          <p class="font-serif text-[18px] sm:text-[19px] font-light leading-[1.55] text-foreground max-w-[60ch]">
+            {p}
+          </p>
+        ))
+      }
     </div>
-    <div data-i18n-locale="en" class="space-y-3 sm:space-y-4">
-      {aboutByLocale.en.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+    <div data-i18n-locale="en" class="space-y-4">
+      {
+        aboutByLocale.en.paragraphs.map((p) => (
+          <p class="font-serif text-[18px] sm:text-[19px] font-light leading-[1.55] text-foreground max-w-[60ch]">
+            {p}
+          </p>
+        ))
+      }
     </div>
   </div>
-</section>
+
+  <div data-i18n-locale="es" class="mt-9 grid grid-cols-1 gap-px border sm:grid-cols-3" style="border-color: hsl(var(--line)); background: hsl(var(--line));">
+    {
+      aboutByLocale.es.meta.map(([k, v]) => (
+        <div class="flex flex-col gap-1 px-5 py-4 bg-background">
+          <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{k}</span>
+          <span class="font-serif text-[17px] sm:text-[18px] tracking-[-0.01em]">{v}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <div data-i18n-locale="en" class="mt-9 grid grid-cols-1 gap-px border sm:grid-cols-3" style="border-color: hsl(var(--line)); background: hsl(var(--line));">
+    {
+      aboutByLocale.en.meta.map(([k, v]) => (
+        <div class="flex flex-col gap-1 px-5 py-4 bg-background">
+          <span class="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-foreground">{k}</span>
+          <span class="font-serif text-[17px] sm:text-[18px] tracking-[-0.01em]">{v}</span>
+        </div>
+      ))
+    }
+  </div>
+</div>

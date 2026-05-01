@@ -1,12 +1,9 @@
 ---
 import '../styles/global.css';
-import '@fontsource/oxygen-mono';
-import '@fontsource/oxygen';
 import { routesForLocale } from '@/consts/routes';
 import { MESSAGES_BY_LOCALE, type Locale } from '@/data/portfolio';
 import { ENVIRONMENT } from '@/env/index';
 import Logo from '@/components/Logo.astro';
-import FloatingMascot from '@/components/FloatingMascot.astro';
 import ScrollToTop from '@/components/ScrollToTop.astro';
 
 interface Props {
@@ -94,7 +91,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
     </script>
   </head>
   <body
-    class="bg-background text-foreground min-h-screen flex flex-col font-sans"
+    class="min-h-screen flex flex-col"
     data-title-es={titleByLocale.es}
     data-title-en={titleByLocale.en}
     data-description-es={descriptionByLocale.es}
@@ -102,128 +99,138 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
     data-theme-label-es={messagesEs.actions.theme}
     data-theme-label-en={messagesEn.actions.theme}
   >
-    <header class="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
-      <div class="container mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
-        <a
-          href={routes.home}
-          aria-label="Home"
-          class="group flex items-center justify-center transition-transform hover:scale-105 active:scale-95"
-        >
+    <header data-nav class="fixed inset-x-0 top-0 z-50 transition-all duration-300" style="backdrop-filter: blur(14px) saturate(140%); background: color-mix(in oklab, hsl(var(--background)) 75%, transparent); border-bottom: 1px solid transparent;">
+      <div class="container-editorial flex h-[68px] items-center justify-between gap-8">
+        <a href={routes.home} aria-label="Home" class="inline-flex items-center gap-2.5 font-mono text-[12px] font-medium tracking-[0.06em] text-foreground transition-opacity hover:opacity-85">
           <Logo />
+          <span>IH</span>
         </a>
 
-        <div class="flex items-center gap-2 sm:gap-4 lg:gap-6">
-          <nav class="hidden md:flex gap-6 lg:gap-8">
-            <a
-              href={routes.about}
-              class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <span data-i18n-locale="es">{messagesEs.nav.about}</span>
-              <span data-i18n-locale="en">{messagesEn.nav.about}</span>
-            </a>
-            <a
-              href={routes.experience}
-              class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <span data-i18n-locale="es">{messagesEs.nav.experience}</span>
-              <span data-i18n-locale="en">{messagesEn.nav.experience}</span>
-            </a>
-            <a
-              href={routes.projectsAnchor}
-              class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <span data-i18n-locale="es">{messagesEs.nav.projects}</span>
-              <span data-i18n-locale="en">{messagesEn.nav.projects}</span>
-            </a>
-          </nav>
+        <nav class="hidden items-center gap-7 text-[13.5px] md:flex">
+          <a data-nav-link href={routes.about} data-target="about" class="nav-link">
+            <span data-i18n-locale="es">{messagesEs.nav.about}</span>
+            <span data-i18n-locale="en">{messagesEn.nav.about}</span>
+          </a>
+          <a data-nav-link href={routes.experience} data-target="experience" class="nav-link">
+            <span data-i18n-locale="es">{messagesEs.nav.experience}</span>
+            <span data-i18n-locale="en">{messagesEn.nav.experience}</span>
+          </a>
+          <a data-nav-link href={routes.projectsAnchor} data-target="projects" class="nav-link">
+            <span data-i18n-locale="es">{messagesEs.nav.projects}</span>
+            <span data-i18n-locale="en">{messagesEn.nav.projects}</span>
+          </a>
+          <a data-email-link href="#" class="nav-link">
+            <span data-i18n-locale="es">{messagesEs.nav.contact}</span>
+            <span data-i18n-locale="en">{messagesEn.nav.contact}</span>
+          </a>
+        </nav>
 
-          <div class="flex items-center gap-1 sm:gap-2 pl-2 sm:pl-4 border-l border-border/50">
-            <a
-              data-cv-link
-              href={defaultCvUrl}
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 rounded-md bg-white/5 border border-white/5 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-white/10 transition-colors"
-            >
-              <span>CV</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
+        <div class="flex items-center gap-1.5">
+          <a
+            data-cv-link
+            href={defaultCvUrl}
+            download
+            target="_blank"
+            rel="noopener noreferrer"
+            class="icon-btn"
+          >
+            <span>CV</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16"></path>
+            </svg>
+          </a>
+
+          <button type="button" data-lang-toggle class="icon-btn" aria-label="Toggle language">
+            {nextLocaleLabel}
+          </button>
+
+          <button
+            type="button"
+            data-theme-toggle
+            class="theme-toggle"
+            aria-label={messagesEs.actions.theme}
+            title={messagesEs.actions.theme}
+          >
+            <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+              <path
+                d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.8"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" x2="12" y1="15" y2="3"></line>
-              </svg>
-            </a>
-
-            <button
-              type="button"
-              onclick="window.location.href = 'mailto:' + 'contact' + '@' + 'ismael.dev'"
-              class="hidden lg:block text-sm font-medium text-primary hover:text-primary/80 transition-colors mr-2 lg:mr-4 cursor-pointer"
-            >
-              <span data-i18n-locale="es">{messagesEs.nav.contact}</span>
-              <span data-i18n-locale="en">{messagesEn.nav.contact}</span>
-            </button>
-
-            <button
-              type="button"
-              data-lang-toggle
-              class="h-9 rounded-md px-3 font-mono text-xs text-foreground transition-colors hover:text-foreground/80"
-              >{nextLocaleLabel}</button
-            >
-
-            <button
-              type="button"
-              data-theme-toggle
-              class="theme-toggle"
-              aria-label={messagesEs.actions.theme}
-              title={messagesEs.actions.theme}
-            >
-              <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
-                <path
-                  d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.8 1.8M16.7 16.7l1.8 1.8M5.5 18.5l1.8-1.8M16.7 7.3l1.8-1.8"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"></path>
-              </svg>
-              <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  d="M20.5 14.6A8.6 8.6 0 1 1 9.4 3.5a7.2 7.2 0 1 0 11.1 11.1Z"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.8"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"></path>
-              </svg>
-              <span class="sr-only">
-                <span data-i18n-locale="es">{messagesEs.actions.theme}</span>
-                <span data-i18n-locale="en">{messagesEn.actions.theme}</span>
-              </span>
-            </button>
-          </div>
+                stroke-width="1.5"
+                stroke-linecap="round"></path>
+            </svg>
+            <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span class="sr-only">
+              <span data-i18n-locale="es">{messagesEs.actions.theme}</span>
+              <span data-i18n-locale="en">{messagesEn.actions.theme}</span>
+            </span>
+          </button>
         </div>
       </div>
     </header>
 
-    <main class="flex-1 pt-16">
+    <main class="flex-1">
       <slot />
     </main>
 
-    <footer class="border-t border-white/5 py-8 mt-20">
-      <div class="container mx-auto px-6 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Ismael Hurtado Vargas.</p>
+    <footer class="border-t" style="border-color: hsl(var(--line));">
+      <div class="container-editorial flex flex-wrap items-center justify-between gap-4 py-9 font-mono text-[11px] tracking-[0.06em] text-muted-foreground">
+        <span>© {new Date().getFullYear()} · Ismael Hurtado Vargas · Lima, PE</span>
       </div>
     </footer>
+
+    <style>
+      .nav-link {
+        position: relative;
+        padding: 6px 0;
+        color: hsl(var(--muted-foreground));
+        transition: color 0.2s ease;
+      }
+      .nav-link:hover {
+        color: hsl(var(--foreground));
+      }
+      .nav-link.active {
+        color: hsl(var(--foreground));
+      }
+      .nav-link.active::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background: hsl(var(--brand));
+      }
+      .icon-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        height: 34px;
+        padding: 0 10px;
+        font-family: var(--font-mono);
+        font-size: 11.5px;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        color: hsl(var(--muted-foreground));
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .icon-btn:hover {
+        color: hsl(var(--foreground));
+        border-color: hsl(var(--line));
+        background: hsl(var(--bg-elev));
+      }
+      [data-nav].scrolled {
+        border-bottom-color: hsl(var(--line)) !important;
+      }
+    </style>
 
     <script>
       type Locale = 'es' | 'en';
@@ -259,6 +266,13 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
       const themeToggleButton = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
       const langToggleButton = document.querySelector<HTMLButtonElement>('[data-lang-toggle]');
       const cvLink = document.querySelector<HTMLAnchorElement>('[data-cv-link]');
+      const emailLinks = document.querySelectorAll<HTMLAnchorElement>('[data-email-link]');
+      const navEl = document.querySelector<HTMLElement>('[data-nav]');
+      const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+
+      emailLinks.forEach((link) => {
+        link.setAttribute('href', 'mailto:' + 'contact' + '@' + 'ismael.dev');
+      });
 
       const getLocaleFromStorage = (): Locale => {
         const savedLocale = localStorage.getItem('locale');
@@ -266,20 +280,15 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
       };
 
       const getCurrentLocale = (): Locale => (root.getAttribute('data-locale') === 'en' ? 'en' : 'es');
+
       const scrollToHashTarget = (behavior: ScrollBehavior = 'auto', hash: string = window.location.hash): void => {
         if (!hash || hash === '#') return;
-
         const targetElement = document.querySelector(hash);
         if (!targetElement) return;
-
         const headerOffset = 80;
         const elementPosition = targetElement.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior,
-        });
+        window.scrollTo({ top: offsetPosition, behavior });
       };
 
       const applyTheme = (nextTheme: Theme): void => {
@@ -297,6 +306,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
         if (shouldPersist) localStorage.setItem('locale', nextLocale);
 
         if (langToggleButton) langToggleButton.textContent = nextLocale === 'en' ? 'ES' : 'EN';
+        if (cvLink) cvLink.querySelector('span')?.replaceChildren('CV');
         if (cvLink) cvLink.setAttribute('href', cvByLocale[nextLocale]);
 
         const themeLabel = themeLabelByLocale[nextLocale];
@@ -348,17 +358,11 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
 
         try {
           root.animate(
-            {
-              clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`],
-            },
-            {
-              duration: 420,
-              easing: 'ease-in-out',
-              pseudoElement: '::view-transition-new(root)',
-            },
+            { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`] },
+            { duration: 420, easing: 'ease-in-out', pseudoElement: '::view-transition-new(root)' },
           );
         } catch {
-          // noop: animation is optional
+          // noop
         }
       });
 
@@ -367,6 +371,34 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
         const nextLocale = currentLocale === 'en' ? 'es' : 'en';
         applyLocale(nextLocale, { persist: true, preserveHash: false });
       });
+
+      // Nav scrolled state
+      const onScroll = () => {
+        if (!navEl) return;
+        navEl.classList.toggle('scrolled', window.scrollY > 12);
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Active section indicator
+      const sectionIds = ['about', 'experience', 'projects'];
+      const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+      if (sections.length > 0 && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                const id = e.target.id;
+                navLinks.forEach((link) => {
+                  link.classList.toggle('active', link.dataset.target === id);
+                });
+              }
+            });
+          },
+          { rootMargin: '-40% 0px -55% 0px' },
+        );
+        sections.forEach((s) => observer.observe(s));
+      }
 
       const initScroll = () => {
         if (window.location.hash) requestAnimationFrame(() => scrollToHashTarget('auto'));
@@ -398,7 +430,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
 
       initScroll();
     </script>
-    <FloatingMascot />
+
     <ScrollToTop />
   </body>
 </html>

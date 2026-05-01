@@ -1,0 +1,284 @@
+---
+import type { Experience, Locale } from '@/data/portfolio';
+
+interface Props {
+  experiencesByLocale: Record<Locale, Experience[]>;
+  titleByLocale: Record<Locale, string>;
+  backLabelByLocale: Record<Locale, string>;
+}
+
+const { experiencesByLocale, titleByLocale, backLabelByLocale } = Astro.props;
+const backHref = '/';
+const localeKeys: Locale[] = ['es', 'en'];
+---
+
+<section class="container-editorial py-20 sm:py-28">
+  <div class="mb-14 space-y-6">
+    <a
+      href={backHref}
+      class="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+    >
+      <span class="transition-transform group-hover:-translate-x-1" aria-hidden="true">←</span>
+      <span data-i18n-locale="es">{backLabelByLocale.es}</span>
+      <span data-i18n-locale="en">{backLabelByLocale.en}</span>
+    </a>
+    <h1 class="section-title">
+      <span data-i18n-locale="es">{titleByLocale.es}</span>
+      <span data-i18n-locale="en">{titleByLocale.en}</span>
+    </h1>
+  </div>
+
+  <div class="max-w-3xl">
+    {
+      localeKeys.map((locale) => (
+        <ol data-i18n-locale={locale} class="exp-rail">
+          {experiencesByLocale[locale].map((exp) => {
+            const isMulti = exp.roles.length > 1;
+            return (
+              <li class={`exp-company${exp.current ? ' is-current' : ''}${isMulti ? ' is-multi' : ''}`}>
+                <header class="exp-head">
+                  <span class="exp-period">
+                    {exp.period}
+                    {exp.duration && <span class="exp-duration"> · {exp.duration}</span>}
+                  </span>
+                  {isMulti ? (
+                    <h2 class="exp-company-name">{exp.company}</h2>
+                  ) : (
+                    <h2 class="exp-role">
+                      {exp.roles[0].role}
+                      <span class="exp-company-inline"> · {exp.company}</span>
+                    </h2>
+                  )}
+                  {exp.location && <span class="exp-location">{exp.location}</span>}
+                </header>
+
+                {!isMulti && (
+                  <div class="exp-body">
+                    <ul class="exp-bullets">
+                      {exp.roles[0].description.map((b) => (
+                        <li>{b}</li>
+                      ))}
+                    </ul>
+                    <div class="exp-tags">
+                      {exp.roles[0].tags.map((t) => (
+                        <span class="exp-tag">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {isMulti && (
+                  <ol class="exp-subroles">
+                    {exp.roles.map((r) => (
+                      <li class="exp-subrole">
+                        <span class="exp-period exp-period-sub">{r.period}</span>
+                        <h3 class="exp-role exp-role-sub">{r.role}</h3>
+                        <ul class="exp-bullets">
+                          {r.description.map((b) => (
+                            <li>{b}</li>
+                          ))}
+                        </ul>
+                        <div class="exp-tags">
+                          {r.tags.map((t) => (
+                            <span class="exp-tag">{t}</span>
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .exp-rail {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .exp-company {
+    list-style: none;
+    position: relative;
+    padding: 32px 0 32px 32px;
+    border-top: 1px solid hsl(var(--line));
+  }
+
+  .exp-company:last-child {
+    border-bottom: 1px solid hsl(var(--line));
+  }
+
+  .exp-company::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: hsl(var(--line));
+  }
+
+  .exp-company::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 40px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: hsl(var(--background));
+    border: 1px solid hsl(var(--muted-foreground));
+  }
+
+  .exp-company.is-current::after {
+    background: #2ee598;
+    border-color: #2ee598;
+    box-shadow: 0 0 0 4px rgba(46, 229, 152, 0.18);
+  }
+
+  .exp-head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  .exp-period {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+  }
+
+  .exp-duration {
+    color: hsl(var(--text-dim));
+  }
+
+  .exp-role,
+  .exp-company-name {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .exp-company-inline {
+    color: hsl(var(--muted-foreground));
+    font-style: italic;
+  }
+
+  .exp-location {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: hsl(var(--text-dim));
+  }
+
+  .exp-bullets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .exp-bullets li {
+    font-size: 15px;
+    color: hsl(var(--muted-foreground));
+    display: flex;
+    gap: 14px;
+    line-height: 1.6;
+  }
+
+  .exp-bullets li::before {
+    content: '—';
+    color: hsl(var(--text-dim));
+    flex: none;
+  }
+
+  .exp-tags {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .exp-tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 3px 8px;
+    background: hsl(var(--bg-soft));
+    border: 1px solid hsl(var(--line));
+    border-radius: 4px;
+    color: hsl(var(--muted-foreground));
+    letter-spacing: 0.02em;
+  }
+
+  .exp-subroles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .exp-subrole {
+    list-style: none;
+    position: relative;
+    padding: 22px 0 22px 26px;
+    border-top: 1px dashed hsl(var(--line));
+  }
+
+  .exp-subrole::before {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 32px;
+    width: 18px;
+    height: 1px;
+    background: hsl(var(--line));
+  }
+
+  .exp-subrole:first-child {
+    border-top: none;
+    padding-top: 8px;
+  }
+
+  .exp-subrole:first-child::before {
+    top: 18px;
+  }
+
+  .exp-period-sub {
+    display: inline-block;
+    margin-bottom: 4px;
+    font-size: 10.5px;
+  }
+
+  .exp-role-sub {
+    font-size: 20px;
+    margin-top: 2px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .exp-company {
+      padding-left: 24px;
+    }
+    .exp-role,
+    .exp-company-name {
+      font-size: 21px;
+    }
+    .exp-bullets li {
+      font-size: 14px;
+    }
+  }
+</style>

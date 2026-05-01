@@ -3,6 +3,7 @@ export const routesForLocale = () => {
     home: '/',
     about: '/#about',
     experience: '/#experience',
+    experienceFull: '/experience/',
     projectsAnchor: '/#projects',
     projects: '/projects/',
   };

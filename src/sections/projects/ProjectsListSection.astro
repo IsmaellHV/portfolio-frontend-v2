@@ -16,167 +16,125 @@ const backHref = '/';
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/projects/*.{jpeg,jpg,png,gif}');
 ---
 
-<section class="container mx-auto max-w-4xl px-6 py-24">
-  <div class="mb-10 flex items-center justify-between gap-4">
-    <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">
-      <span data-i18n-locale="es">{titleByLocale.es}</span>
-      <span data-i18n-locale="en">{titleByLocale.en}</span>
-    </h1>
-    <a href={backHref} class="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+<section class="container-editorial py-24 sm:py-32">
+  <div class="mb-14 space-y-6">
+    <a
+      href={backHref}
+      class="group inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors hover:text-foreground"
+    >
+      <span class="transition-transform group-hover:-translate-x-1" aria-hidden="true">←</span>
       <span data-i18n-locale="es">{backLabelByLocale.es}</span>
       <span data-i18n-locale="en">{backLabelByLocale.en}</span>
     </a>
+    <h1 class="section-title">
+      <span data-i18n-locale="es">{titleByLocale.es}</span>
+      <span data-i18n-locale="en">{titleByLocale.en}</span>
+    </h1>
   </div>
 
-  <div data-i18n-locale="es" class="space-y-4">
+  <div data-i18n-locale="es" class="grid grid-cols-1 gap-x-6 gap-y-14 md:grid-cols-2">
     {
       projectsByLocale.es.map((project) => {
         const hasExternalLink = Boolean(project.link && project.link !== '#');
-
         return (
-          <article class="group rounded-lg border border-border/70 p-5 sm:p-6 flex flex-col sm:flex-row gap-6 transition-colors hover:bg-muted/30">
-            {project.image && (
-              <div class="w-full sm:w-1/3 shrink-0 overflow-hidden rounded border border-border/50 bg-foreground/10 dark:bg-black/50">
-                <a
-                  href={hasExternalLink ? project.link : '#'}
-                  target={hasExternalLink ? '_blank' : undefined}
-                  rel={hasExternalLink ? 'noopener noreferrer' : undefined}
-                  class="block h-full"
-                >
+          <a
+            href={hasExternalLink ? project.link : '#'}
+            target={hasExternalLink ? '_blank' : undefined}
+            rel={hasExternalLink ? 'noopener noreferrer' : undefined}
+            class="group flex flex-col gap-[18px]"
+          >
+            <div class="relative aspect-[4/3] overflow-hidden rounded-[2px] border" style="border-color: hsl(var(--line)); background: hsl(var(--bg-soft));">
+              {project.image && (
+                <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
                   <Image
                     src={images[project.image!]()}
                     alt={project.title}
-                    class="w-full aspect-video object-cover grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
+                    class="h-full w-full object-cover"
                   />
-                </a>
-              </div>
-            )}
-            <div class="flex-1">
-              <div class="flex flex-wrap items-center gap-3">
-                <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-muted-foreground transition-colors hover:text-foreground"
-                    aria-label="GitHub Repository"
-                    title="GitHub Repository"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="transition-transform hover:scale-110"
-                    >
-                      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.03c3.15-.38 6.5-1.4 6.5-7.17a5.1 5.1 0 0 0-1.4-3.5 4.7 4.7 0 0 0-.1-3.5s-1.1-.35-3.5 1.25a11.3 11.3 0 0 0-6 0C5.1 3.5 4 3.85 4 3.85a4.7 4.7 0 0 0-.1 3.5 5.1 5.1 0 0 0-1.4 3.5c0 5.75 3.35 6.79 6.5 7.17A4.8 4.8 0 0 0 8 18v4" />
-                    </svg>
-                  </a>
-                )}
-              </div>
-              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              {hasExternalLink && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-                >
-                  {visitProjectLabelByLocale.es} →
-                </a>
+                </div>
               )}
+              <span class="absolute top-3.5 left-3.5 z-10 font-mono text-[10.5px] tracking-[0.1em] text-muted-foreground">
+                {project.id} / {project.year}
+              </span>
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
             </div>
-          </article>
+            <div class="flex items-center justify-between font-mono text-[10.5px] uppercase tracking-[0.1em] text-muted-foreground">
+              <span>{project.client}</span>
+              <span>{project.year}</span>
+            </div>
+            <h2 class="font-serif text-[22px] sm:text-[24px] font-normal tracking-[-0.01em] leading-[1.2]">
+              {project.title}
+            </h2>
+            <p class="text-[14.5px] leading-[1.5] text-muted-foreground">{project.description}</p>
+            <div class="flex flex-wrap gap-x-3">
+              {project.tags.map((tag, idx) => (
+                <span class="font-mono text-[10.5px] text-muted-foreground">
+                  {tag}
+                  {idx < project.tags.length - 1 && <span class="ml-1.5" style="color: hsl(var(--text-dim));">·</span>}
+                </span>
+              ))}
+            </div>
+            {hasExternalLink && (
+              <span class="mt-1 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors group-hover:text-foreground">
+                {visitProjectLabelByLocale.es}
+                <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+              </span>
+            )}
+          </a>
         );
       })
     }
   </div>
 
-  <div data-i18n-locale="en" class="space-y-4">
+  <div data-i18n-locale="en" class="grid grid-cols-1 gap-x-6 gap-y-14 md:grid-cols-2">
     {
       projectsByLocale.en.map((project) => {
         const hasExternalLink = Boolean(project.link && project.link !== '#');
-
         return (
-          <article class="group rounded-lg border border-border/70 p-5 sm:p-6 flex flex-col sm:flex-row gap-6 transition-colors hover:bg-muted/30">
-            {project.image && (
-              <div class="w-full sm:w-1/3 shrink-0 overflow-hidden rounded border border-border/50 bg-foreground/10 dark:bg-black/50">
-                <a
-                  href={hasExternalLink ? project.link : '#'}
-                  target={hasExternalLink ? '_blank' : undefined}
-                  rel={hasExternalLink ? 'noopener noreferrer' : undefined}
-                  class="block h-full"
-                >
+          <a
+            href={hasExternalLink ? project.link : '#'}
+            target={hasExternalLink ? '_blank' : undefined}
+            rel={hasExternalLink ? 'noopener noreferrer' : undefined}
+            class="group flex flex-col gap-[18px]"
+          >
+            <div class="relative aspect-[4/3] overflow-hidden rounded-[2px] border" style="border-color: hsl(var(--line)); background: hsl(var(--bg-soft));">
+              {project.image && (
+                <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
                   <Image
                     src={images[project.image!]()}
                     alt={project.title}
-                    class="w-full aspect-video object-cover grayscale opacity-60 transition-all duration-500 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105"
+                    class="h-full w-full object-cover"
                   />
-                </a>
-              </div>
-            )}
-            <div class="flex-1">
-              <div class="flex flex-wrap items-center gap-3">
-                <h2 class="text-lg font-semibold text-foreground">{project.title}</h2>
-                {project.github && (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-muted-foreground transition-colors hover:text-foreground"
-                    aria-label="GitHub Repository"
-                    title="GitHub Repository"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="transition-transform hover:scale-110"
-                    >
-                      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.03c3.15-.38 6.5-1.4 6.5-7.17a5.1 5.1 0 0 0-1.4-3.5 4.7 4.7 0 0 0-.1-3.5s-1.1-.35-3.5 1.25a11.3 11.3 0 0 0-6 0C5.1 3.5 4 3.85 4 3.85a4.7 4.7 0 0 0-.1 3.5 5.1 5.1 0 0 0-1.4 3.5c0 5.75 3.35 6.79 6.5 7.17A4.8 4.8 0 0 0 8 18v4" />
-                    </svg>
-                  </a>
-                )}
-              </div>
-              <p class="mt-2 text-sm leading-relaxed text-muted-foreground">{project.description}</p>
-              <div class="mt-4 flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span class="rounded-full bg-secondary/60 px-2.5 py-1 font-mono text-xs text-foreground/70">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              {hasExternalLink && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="mt-4 inline-flex text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
-                >
-                  {visitProjectLabelByLocale.en} →
-                </a>
+                </div>
               )}
+              <span class="absolute top-3.5 left-3.5 z-10 font-mono text-[10.5px] tracking-[0.1em] text-muted-foreground">
+                {project.id} / {project.year}
+              </span>
+              <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent" />
             </div>
-          </article>
+            <div class="flex items-center justify-between font-mono text-[10.5px] uppercase tracking-[0.1em] text-muted-foreground">
+              <span>{project.client}</span>
+              <span>{project.year}</span>
+            </div>
+            <h2 class="font-serif text-[22px] sm:text-[24px] font-normal tracking-[-0.01em] leading-[1.2]">
+              {project.title}
+            </h2>
+            <p class="text-[14.5px] leading-[1.5] text-muted-foreground">{project.description}</p>
+            <div class="flex flex-wrap gap-x-3">
+              {project.tags.map((tag, idx) => (
+                <span class="font-mono text-[10.5px] text-muted-foreground">
+                  {tag}
+                  {idx < project.tags.length - 1 && <span class="ml-1.5" style="color: hsl(var(--text-dim));">·</span>}
+                </span>
+              ))}
+            </div>
+            {hasExternalLink && (
+              <span class="mt-1 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground transition-colors group-hover:text-foreground">
+                {visitProjectLabelByLocale.en}
+                <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">→</span>
+              </span>
+            )}
+          </a>
         );
       })
     }
