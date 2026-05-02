@@ -1,6 +1,18 @@
-# Portfolio Frontend v2
+<p align="center">
+  <img src="public/favicon.svg" alt="Portfolio logo" width="96" height="96" />
+</p>
 
-Portfolio personal construido con Astro y Tailwind CSS.
+<h1 align="center">Portfolio Frontend v2</h1>
+
+<p align="center">
+  Portfolio personal de <a href="https://ismaelhv.com">Ismael Hurtado Vargas</a> — construido con Astro 5 y Tailwind CSS 4.
+</p>
+
+<p align="center">
+  🔗 <a href="https://ismaelhv.com">ismaelhv.com</a>
+</p>
+
+---
 
 ## Stack
 
