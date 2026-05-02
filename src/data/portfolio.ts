@@ -98,10 +98,8 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       name: 'Ismael Hurtado Vargas',
       role: 'Full-Stack & Mobile · IA',
       status: 'Lima, PE',
-      tagline:
-        'Construyo productos web y móviles que combinan rendimiento, diseño cuidado y automatización con IA.',
-      summary:
-        'Construyo productos web y móviles con enfoque en rendimiento, UX y automatización con IA.',
+      tagline: 'Construyo productos web y móviles que combinan rendimiento, diseño cuidado y automatización con IA.',
+      summary: 'Construyo productos web y móviles con enfoque en rendimiento, UX y automatización con IA.',
       socials: [
         { platform: 'GitHub', url: 'https://github.com/ismaellhv' },
         { platform: 'LinkedIn', url: 'https://linkedin.com/in/ihurtadov' },
@@ -249,14 +247,25 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
       {
         id: '01',
         title: 'Portfolio v1',
-        description:
-          'Portfolio personal v1 construido con React, TailwindCSS, NodeJS y TypeScript.',
+        description: 'Portfolio personal v1 construido con React, TailwindCSS, NodeJS y TypeScript.',
         tags: ['React', 'Tailwind', 'Node.js', 'TypeScript'],
         year: '2024',
         client: 'Personal',
         link: 'https://v1.ismaelhv.com/',
         github: 'https://github.com/IsmaellHV/portfolio-frontend-v1',
         image: '/src/assets/projects/portfolio-v1.png',
+      },
+      {
+        id: '02',
+        title: 'FastLink',
+        description:
+          'Acortador de URLs gratis, rápido y privado. Protección anti-bots con Cloudflare Turnstile y soporte multi-idioma.',
+        tags: ['Astro', 'React', 'TailwindCSS', 'TypeScript'],
+        year: '2025',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/fastlink/',
+        github: 'https://github.com/IsmaellHV/fastlink',
+        image: '/src/assets/projects/fastlink.png',
       },
     ],
   },
@@ -422,6 +431,18 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         link: 'https://v1.ismaelhv.com/',
         github: 'https://github.com/IsmaellHV/portfolio-frontend-v1',
         image: '/src/assets/projects/portfolio-v1.png',
+      },
+      {
+        id: '02',
+        title: 'FastLink',
+        description:
+          'Free, fast and privacy-friendly URL shortener. Cloudflare Turnstile protection and multi-language support.',
+        tags: ['Astro', 'React', 'TailwindCSS', 'TypeScript'],
+        year: '2025',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/fastlink/',
+        github: 'https://github.com/IsmaellHV/fastlink',
+        image: '/src/assets/projects/fastlink.png',
       },
     ],
   },

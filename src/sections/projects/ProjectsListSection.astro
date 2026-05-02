@@ -36,6 +36,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/project
     {
       projectsByLocale.es.map((project) => {
         const hasExternalLink = Boolean(project.link && project.link !== '#');
+        const imgLoader = project.image ? images[project.image] : undefined;
         return (
           <a
             href={hasExternalLink ? project.link : '#'}
@@ -44,10 +45,10 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/project
             class="group flex flex-col gap-[18px]"
           >
             <div class="relative aspect-[4/3] overflow-hidden rounded-[2px] border" style="border-color: hsl(var(--line)); background: hsl(var(--bg-soft));">
-              {project.image && (
+              {imgLoader && (
                 <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
                   <Image
-                    src={images[project.image!]()}
+                    src={imgLoader()}
                     alt={project.title}
                     class="h-full w-full object-cover"
                   />
@@ -90,6 +91,7 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/project
     {
       projectsByLocale.en.map((project) => {
         const hasExternalLink = Boolean(project.link && project.link !== '#');
+        const imgLoader = project.image ? images[project.image] : undefined;
         return (
           <a
             href={hasExternalLink ? project.link : '#'}
@@ -98,10 +100,10 @@ const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/project
             class="group flex flex-col gap-[18px]"
           >
             <div class="relative aspect-[4/3] overflow-hidden rounded-[2px] border" style="border-color: hsl(var(--line)); background: hsl(var(--bg-soft));">
-              {project.image && (
+              {imgLoader && (
                 <div class="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-[1.03]">
                   <Image
-                    src={images[project.image!]()}
+                    src={imgLoader()}
                     alt={project.title}
                     class="h-full w-full object-cover"
                   />

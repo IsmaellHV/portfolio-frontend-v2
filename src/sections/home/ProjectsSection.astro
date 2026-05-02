@@ -38,6 +38,7 @@ const localeKeys: Locale[] = ['es', 'en'];
         <ol data-i18n-locale={locale} class="project-list">
           {projectsByLocale[locale].map((project) => {
             const hasExternalLink = Boolean(project.link && project.link !== '#');
+            const imgLoader = project.image ? images[project.image] : undefined;
             return (
               <li>
                 <a
@@ -46,10 +47,10 @@ const localeKeys: Locale[] = ['es', 'en'];
                   rel={hasExternalLink ? 'noopener noreferrer' : undefined}
                   class="project-row"
                 >
-                  {project.image && (
+                  {imgLoader && (
                     <div class="project-thumb">
                       <Image
-                        src={images[project.image!]()}
+                        src={imgLoader()}
                         alt={project.title}
                         class="h-full w-full object-cover"
                       />
