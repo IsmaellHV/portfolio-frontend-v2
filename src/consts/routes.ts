@@ -6,5 +6,6 @@ export const routesForLocale = () => {
     experienceFull: '/experience/',
     projectsAnchor: '/#projects',
     projects: '/projects/',
+    contact: '/#contact',
   };
 };

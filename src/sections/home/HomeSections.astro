@@ -5,6 +5,7 @@ import HeroSection from './HeroSection.astro';
 import AboutSection from './AboutSection.astro';
 import ExperienceSection from './ExperienceSection.astro';
 import ProjectsSection from './ProjectsSection.astro';
+import ContactSection from './ContactSection.astro';
 
 const routes = routesForLocale();
 
@@ -87,4 +88,11 @@ const { dataByLocale, messagesByLocale } = Astro.props;
       }}
     />
   </div>
+
+  <ContactSection
+    messagesByLocale={{
+      es: messagesByLocale.es.contact,
+      en: messagesByLocale.en.contact,
+    }}
+  />
 </div>

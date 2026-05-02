@@ -28,51 +28,97 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
 <html lang={resolvedDefaultLocale} data-locale={resolvedDefaultLocale}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={defaultDescription} />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={defaultDescription} />
     <meta name="keywords" content={ENVIRONMENT.APP.KEYWORDS} />
     <meta name="author" content={ENVIRONMENT.APP.AUTHOR} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <title>{defaultTitle}</title>
 
-    <link
-      rel="canonical"
-      href={new URL(Astro.url.pathname, ENVIRONMENT.APP.URL || Astro.site || Astro.url.origin).toString()}
-    />
+    {
+      (() => {
+        const fullUrl = new URL(Astro.url.pathname, ENVIRONMENT.APP.URL || Astro.site || Astro.url.origin).toString();
+        const siteRoot = (ENVIRONMENT.APP.URL || Astro.site?.toString() || Astro.url.origin).replace(/\/$/, '');
+        const profileUrl = siteRoot;
+        const projectsUrl = `${siteRoot}/projects/`;
+        const experienceUrl = `${siteRoot}/experience/`;
+        const ogLocale = resolvedDefaultLocale === 'en' ? 'en_US' : 'es_ES';
+        const ogLocaleAlt = resolvedDefaultLocale === 'en' ? 'es_ES' : 'en_US';
+        const sameAs = [ENVIRONMENT.SOCIAL.GITHUB, ENVIRONMENT.SOCIAL.LINKEDIN, ENVIRONMENT.SOCIAL.TWITTER].filter(Boolean);
 
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'ProfilePage',
-        mainEntity: {
-          '@type': 'Person',
-          name: 'Ismael Hurtado Vargas',
-          jobTitle: 'Full-Stack Developer',
-          url: ENVIRONMENT.APP.URL || Astro.site?.toString() || Astro.url.origin,
-          sameAs: [ENVIRONMENT.SOCIAL.GITHUB, ENVIRONMENT.SOCIAL.LINKEDIN, ENVIRONMENT.SOCIAL.TWITTER].filter(Boolean),
-        },
-      })}
-    />
+        return (
+          <>
+            <link rel="canonical" href={fullUrl} />
+            {/* hreflang — single-URL i18n; locale is JS-swapped so both langs serve same URL */}
+            <link rel="alternate" hreflang="es" href={fullUrl} />
+            <link rel="alternate" hreflang="en" href={fullUrl} />
+            <link rel="alternate" hreflang="x-default" href={fullUrl} />
 
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content={new URL(Astro.url.pathname, ENVIRONMENT.APP.URL || Astro.site || Astro.url.origin).toString()}
-    />
-    <meta property="og:title" content={defaultTitle} />
-    <meta property="og:description" content={defaultDescription} />
-    <meta property="og:image" content={ENVIRONMENT.META.OG_IMAGE} />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={fullUrl} />
+            <meta property="og:title" content={defaultTitle} />
+            <meta property="og:description" content={defaultDescription} />
+            <meta property="og:image" content={ENVIRONMENT.META.OG_IMAGE} />
+            <meta property="og:site_name" content="Ismael Hurtado Vargas" />
+            <meta property="og:locale" content={ogLocale} />
+            <meta property="og:locale:alternate" content={ogLocaleAlt} />
 
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta
-      property="twitter:url"
-      content={new URL(Astro.url.pathname, ENVIRONMENT.APP.URL || Astro.site || Astro.url.origin).toString()}
-    />
-    <meta property="twitter:title" content={defaultTitle} />
-    <meta property="twitter:description" content={defaultDescription} />
-    <meta property="twitter:image" content={ENVIRONMENT.META.OG_IMAGE} />
+            <meta property="twitter:card" content="summary_large_image" />
+            <meta property="twitter:url" content={fullUrl} />
+            <meta property="twitter:title" content={defaultTitle} />
+            <meta property="twitter:description" content={defaultDescription} />
+            <meta property="twitter:image" content={ENVIRONMENT.META.OG_IMAGE} />
+
+            <script
+              type="application/ld+json"
+              set:html={JSON.stringify([
+                {
+                  '@context': 'https://schema.org',
+                  '@type': 'WebSite',
+                  url: profileUrl,
+                  name: 'Ismael Hurtado Vargas — Portfolio',
+                  inLanguage: [resolvedDefaultLocale, resolvedDefaultLocale === 'en' ? 'es' : 'en'],
+                  publisher: { '@type': 'Person', name: 'Ismael Hurtado Vargas' },
+                },
+                {
+                  '@context': 'https://schema.org',
+                  '@type': 'Person',
+                  name: 'Ismael Hurtado Vargas',
+                  jobTitle: 'Full-Stack Developer',
+                  url: profileUrl,
+                  image: `${siteRoot}${ENVIRONMENT.META.OG_IMAGE}`,
+                  description: defaultDescription,
+                  worksFor: { '@type': 'Organization', name: 'Independent' },
+                  knowsAbout: ['React', 'Node.js', 'TypeScript', 'NestJS', 'Astro', 'Docker', 'AI Automation'],
+                  address: { '@type': 'PostalAddress', addressLocality: 'Lima', addressCountry: 'PE' },
+                  sameAs,
+                },
+                {
+                  '@context': 'https://schema.org',
+                  '@type': 'ProfilePage',
+                  inLanguage: resolvedDefaultLocale,
+                  mainEntity: {
+                    '@type': 'Person',
+                    name: 'Ismael Hurtado Vargas',
+                    jobTitle: 'Full-Stack Developer',
+                    url: profileUrl,
+                    sameAs,
+                  },
+                  hasPart: [
+                    { '@type': 'WebPage', name: 'Projects', url: projectsUrl },
+                    { '@type': 'WebPage', name: 'Experience', url: experienceUrl },
+                  ],
+                },
+              ])}
+            />
+          </>
+        );
+      })()
+    }
 
     <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -119,7 +165,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
             <span data-i18n-locale="es">{messagesEs.nav.projects}</span>
             <span data-i18n-locale="en">{messagesEn.nav.projects}</span>
           </a>
-          <a data-email-link href="#" class="nav-link">
+          <a data-nav-link href="#contact" data-target="contact" class="nav-link">
             <span data-i18n-locale="es">{messagesEs.nav.contact}</span>
             <span data-i18n-locale="en">{messagesEn.nav.contact}</span>
           </a>
@@ -260,6 +306,8 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
       const descriptionMeta = document.querySelector('meta[name="description"]');
       const ogTitleMeta = document.querySelector('meta[property="og:title"]');
       const ogDescriptionMeta = document.querySelector('meta[property="og:description"]');
+      const ogLocaleMeta = document.querySelector('meta[property="og:locale"]');
+      const ogLocaleAltMeta = document.querySelector('meta[property="og:locale:alternate"]');
       const twitterTitleMeta = document.querySelector('meta[property="twitter:title"]');
       const twitterDescriptionMeta = document.querySelector('meta[property="twitter:description"]');
 
@@ -271,7 +319,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
       const navLinks = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
 
       emailLinks.forEach((link) => {
-        link.setAttribute('href', 'mailto:' + 'contact' + '@' + 'ismael.dev');
+        link.setAttribute('href', '#contact');
       });
 
       const getLocaleFromStorage = (): Locale => {
@@ -330,6 +378,11 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
           twitterDescriptionMeta?.setAttribute('content', nextDescription);
         }
 
+        const nextOgLocale = nextLocale === 'en' ? 'en_US' : 'es_ES';
+        const nextOgLocaleAlt = nextLocale === 'en' ? 'es_ES' : 'en_US';
+        ogLocaleMeta?.setAttribute('content', nextOgLocale);
+        ogLocaleAltMeta?.setAttribute('content', nextOgLocaleAlt);
+
         if (shouldPreserveHash && window.location.hash) {
           requestAnimationFrame(() => scrollToHashTarget('auto'));
         } else if (!shouldPreserveHash && window.location.hash) {
@@ -381,7 +434,7 @@ const nextLocaleLabel = resolvedDefaultLocale === 'en' ? 'ES' : 'EN';
       window.addEventListener('scroll', onScroll, { passive: true });
 
       // Active section indicator
-      const sectionIds = ['about', 'experience', 'projects'];
+      const sectionIds = ['about', 'experience', 'projects', 'contact'];
       const sections = sectionIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
       if (sections.length > 0 && 'IntersectionObserver' in window) {
         const observer = new IntersectionObserver(

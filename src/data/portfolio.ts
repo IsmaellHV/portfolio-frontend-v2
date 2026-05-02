@@ -90,6 +90,26 @@ export interface LocaleMessages {
     projectsTitle: string;
     experienceTitle: string;
   };
+  contact: {
+    kicker: string;
+    headline: string;
+    description: string;
+    nameLabel: string;
+    namePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    submit: string;
+    submitting: string;
+    success: string;
+    errorGeneric: string;
+    errorCaptcha: string;
+    errorRequiredName: string;
+    errorRequiredEmail: string;
+    errorInvalidEmail: string;
+    errorRequiredMessage: string;
+  };
 }
 
 export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
@@ -266,6 +286,18 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         link: 'https://ismaelhv.com/fastlink/',
         github: 'https://github.com/IsmaellHV/fastlink',
         image: '/src/assets/projects/fastlink.png',
+      },
+      {
+        id: '03',
+        title: 'DevTools',
+        description:
+          'Set de utilidades para desarrolladores en el navegador: Base64, QR, JSON, AES, JWT y más. Todo se ejecuta localmente, sin uploads.',
+        tags: ['Astro', 'React', 'TailwindCSS', 'TypeScript'],
+        year: '2025',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/tools/',
+        github: 'https://github.com/IsmaellHV/tools',
+        image: '/src/assets/projects/tools.png',
       },
     ],
   },
@@ -444,6 +476,18 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         github: 'https://github.com/IsmaellHV/fastlink',
         image: '/src/assets/projects/fastlink.png',
       },
+      {
+        id: '03',
+        title: 'DevTools',
+        description:
+          'Set of in-browser developer utilities: Base64, QR, JSON, AES, JWT and more. Everything runs locally — no uploads.',
+        tags: ['Astro', 'React', 'TailwindCSS', 'TypeScript'],
+        year: '2025',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/tools/',
+        github: 'https://github.com/IsmaellHV/tools',
+        image: '/src/assets/projects/tools.png',
+      },
     ],
   },
 };
@@ -469,6 +513,26 @@ export const MESSAGES_BY_LOCALE: Record<Locale, LocaleMessages> = {
       projectsTitle: 'Proyectos',
       experienceTitle: 'Experiencia',
     },
+    contact: {
+      kicker: 'Contacto',
+      headline: 'Conversemos sobre tu próximo proyecto.',
+      description: 'Escríbeme y te responderé en menos de 24 horas.',
+      nameLabel: 'Nombre',
+      namePlaceholder: 'Tu nombre',
+      emailLabel: 'Correo',
+      emailPlaceholder: 'tu@correo.com',
+      messageLabel: 'Mensaje',
+      messagePlaceholder: '¿En qué puedo ayudarte?',
+      submit: 'Enviar mensaje',
+      submitting: 'Enviando...',
+      success: 'Mensaje enviado. Te responderé pronto.',
+      errorGeneric: 'No se pudo enviar el mensaje. Intenta nuevamente.',
+      errorCaptcha: 'Verifica el captcha antes de enviar.',
+      errorRequiredName: 'Ingresa tu nombre.',
+      errorRequiredEmail: 'Ingresa tu correo.',
+      errorInvalidEmail: 'Correo no válido.',
+      errorRequiredMessage: 'Ingresa un mensaje.',
+    },
   },
   en: {
     nav: {
@@ -489,6 +553,26 @@ export const MESSAGES_BY_LOCALE: Record<Locale, LocaleMessages> = {
     pages: {
       projectsTitle: 'Projects',
       experienceTitle: 'Experience',
+    },
+    contact: {
+      kicker: 'Contact',
+      headline: "Let's talk about your next project.",
+      description: 'Drop me a message and I will reply within 24 hours.',
+      nameLabel: 'Name',
+      namePlaceholder: 'Your name',
+      emailLabel: 'Email',
+      emailPlaceholder: 'you@email.com',
+      messageLabel: 'Message',
+      messagePlaceholder: 'How can I help?',
+      submit: 'Send message',
+      submitting: 'Sending...',
+      success: 'Message sent. I will reply soon.',
+      errorGeneric: 'Could not send the message. Please try again.',
+      errorCaptcha: 'Complete the captcha before submitting.',
+      errorRequiredName: 'Enter your name.',
+      errorRequiredEmail: 'Enter your email.',
+      errorInvalidEmail: 'Invalid email.',
+      errorRequiredMessage: 'Enter a message.',
     },
   },
 };

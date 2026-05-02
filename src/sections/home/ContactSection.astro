@@ -1,0 +1,310 @@
+---
+import type { Locale, LocaleMessages } from '@/data/portfolio';
+import { ENVIRONMENT } from '@/env/index';
+
+interface Props {
+  messagesByLocale: Record<Locale, LocaleMessages['contact']>;
+}
+
+const { messagesByLocale } = Astro.props;
+const turnstileKey = ENVIRONMENT.TURNSTILE.SITE_KEY;
+---
+
+<section id="contact" class="border-t py-24 sm:py-32" style="border-color: hsl(var(--line));">
+  <div class="container-editorial">
+    <div class="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
+      <div class="space-y-5">
+        <span class="eyebrow">
+          <span data-i18n-locale="es">{messagesByLocale.es.kicker}</span>
+          <span data-i18n-locale="en">{messagesByLocale.en.kicker}</span>
+        </span>
+        <h2 class="section-title">
+          <span data-i18n-locale="es">{messagesByLocale.es.headline}</span>
+          <span data-i18n-locale="en">{messagesByLocale.en.headline}</span>
+        </h2>
+        <p class="font-serif text-[18px] sm:text-[19px] font-light leading-[1.55] text-muted-foreground max-w-[42ch]">
+          <span data-i18n-locale="es">{messagesByLocale.es.description}</span>
+          <span data-i18n-locale="en">{messagesByLocale.en.description}</span>
+        </p>
+      </div>
+
+      <form
+        data-contact-form
+        class="space-y-5"
+        data-msg-success-es={messagesByLocale.es.success}
+        data-msg-success-en={messagesByLocale.en.success}
+        data-msg-error-es={messagesByLocale.es.errorGeneric}
+        data-msg-error-en={messagesByLocale.en.errorGeneric}
+        data-msg-captcha-es={messagesByLocale.es.errorCaptcha}
+        data-msg-captcha-en={messagesByLocale.en.errorCaptcha}
+        data-msg-req-name-es={messagesByLocale.es.errorRequiredName}
+        data-msg-req-name-en={messagesByLocale.en.errorRequiredName}
+        data-msg-req-email-es={messagesByLocale.es.errorRequiredEmail}
+        data-msg-req-email-en={messagesByLocale.en.errorRequiredEmail}
+        data-msg-inv-email-es={messagesByLocale.es.errorInvalidEmail}
+        data-msg-inv-email-en={messagesByLocale.en.errorInvalidEmail}
+        data-msg-req-message-es={messagesByLocale.es.errorRequiredMessage}
+        data-msg-req-message-en={messagesByLocale.en.errorRequiredMessage}
+        data-msg-submit-es={messagesByLocale.es.submit}
+        data-msg-submit-en={messagesByLocale.en.submit}
+        data-msg-submitting-es={messagesByLocale.es.submitting}
+        data-msg-submitting-en={messagesByLocale.en.submitting}
+      >
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="space-y-2 block">
+            <span class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">
+              <span data-i18n-locale="es">{messagesByLocale.es.nameLabel}</span>
+              <span data-i18n-locale="en">{messagesByLocale.en.nameLabel}</span>
+            </span>
+            <input
+              type="text"
+              name="name"
+              maxlength="100"
+              required
+              data-placeholder-es={messagesByLocale.es.namePlaceholder}
+              data-placeholder-en={messagesByLocale.en.namePlaceholder}
+              placeholder={messagesByLocale.es.namePlaceholder}
+              class="contact-input"
+            />
+          </label>
+          <label class="space-y-2 block">
+            <span class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">
+              <span data-i18n-locale="es">{messagesByLocale.es.emailLabel}</span>
+              <span data-i18n-locale="en">{messagesByLocale.en.emailLabel}</span>
+            </span>
+            <input
+              type="email"
+              name="email"
+              maxlength="100"
+              required
+              data-placeholder-es={messagesByLocale.es.emailPlaceholder}
+              data-placeholder-en={messagesByLocale.en.emailPlaceholder}
+              placeholder={messagesByLocale.es.emailPlaceholder}
+              class="contact-input"
+            />
+          </label>
+        </div>
+
+        <label class="space-y-2 block">
+          <span class="font-mono text-[10.5px] uppercase tracking-[0.14em] text-muted-foreground">
+            <span data-i18n-locale="es">{messagesByLocale.es.messageLabel}</span>
+            <span data-i18n-locale="en">{messagesByLocale.en.messageLabel}</span>
+          </span>
+          <textarea
+            name="message"
+            rows="5"
+            maxlength="500"
+            required
+            data-placeholder-es={messagesByLocale.es.messagePlaceholder}
+            data-placeholder-en={messagesByLocale.en.messagePlaceholder}
+            placeholder={messagesByLocale.es.messagePlaceholder}
+            class="contact-input"></textarea>
+        </label>
+
+        {turnstileKey && (
+          <div data-turnstile-mount class="flex justify-start" data-sitekey={turnstileKey}></div>
+        )}
+
+        <div class="flex items-center gap-4">
+          <button type="submit" class="btn btn-primary" data-submit-btn>
+            <span data-submit-label>
+              <span data-i18n-locale="es">{messagesByLocale.es.submit}</span>
+              <span data-i18n-locale="en">{messagesByLocale.en.submit}</span>
+            </span>
+            <span class="arrow" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M13 6l6 6-6 6"></path>
+              </svg>
+            </span>
+          </button>
+          <p data-form-status class="font-mono text-[12px] tracking-[0.04em]" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-input {
+    width: 100%;
+    padding: 12px 14px;
+    font-family: var(--font-sans, inherit);
+    font-size: 14.5px;
+    color: hsl(var(--foreground));
+    background: hsl(var(--bg-elev));
+    border: 1px solid hsl(var(--line));
+    border-radius: 10px;
+    transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .contact-input::placeholder {
+    color: hsl(var(--muted-foreground));
+    opacity: 0.7;
+  }
+  .contact-input:focus {
+    outline: none;
+    border-color: hsl(var(--brand));
+    background: hsl(var(--background));
+  }
+  textarea.contact-input {
+    resize: vertical;
+    min-height: 130px;
+    line-height: 1.5;
+  }
+  [data-form-status].is-success {
+    color: hsl(var(--brand));
+  }
+  [data-form-status].is-error {
+    color: #dc2626;
+  }
+</style>
+
+<script>
+  type Locale = 'es' | 'en';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) {
+    const root = document.documentElement;
+    const submitBtn = form.querySelector<HTMLButtonElement>('[data-submit-btn]');
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]');
+    const status = form.querySelector<HTMLParagraphElement>('[data-form-status]');
+    const turnstileMount = form.querySelector<HTMLDivElement>('[data-turnstile-mount]');
+    let turnstileWidgetId: string | null = null;
+    let turnstileToken = '';
+
+    const apiUrl = import.meta.env.PUBLIC_API_URL || '';
+    const apiAuth = import.meta.env.PUBLIC_API_AUTH_BASIC || '';
+    const schema = import.meta.env.PUBLIC_API_CONTACT_SCHEMA || 'Utilitie';
+    const entity = import.meta.env.PUBLIC_API_CONTACT_ENTITY || 'ContactMessage';
+    const turnstileKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+
+    const getLocale = (): Locale => (root.getAttribute('data-locale') === 'en' ? 'en' : 'es');
+
+    const txt = (key: string): string => {
+      const locale = getLocale();
+      return form.dataset[`${key}${locale === 'en' ? 'En' : 'Es'}`] || '';
+    };
+
+    const updatePlaceholders = () => {
+      const locale = getLocale();
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[data-placeholder-es]').forEach((el) => {
+        const ph = locale === 'en' ? el.dataset.placeholderEn : el.dataset.placeholderEs;
+        if (ph) el.setAttribute('placeholder', ph);
+      });
+    };
+    updatePlaceholders();
+    new MutationObserver(updatePlaceholders).observe(root, { attributes: true, attributeFilter: ['data-locale'] });
+
+    const setStatus = (msg: string, kind: 'success' | 'error' | '' = '') => {
+      if (!status) return;
+      status.textContent = msg;
+      status.classList.remove('is-success', 'is-error');
+      if (kind) status.classList.add(`is-${kind}`);
+    };
+
+    const setSubmitting = (loading: boolean) => {
+      if (!submitBtn || !submitLabel) return;
+      submitBtn.disabled = loading;
+      submitLabel.innerHTML = loading
+        ? `<span data-i18n-locale="es">${form.dataset.msgSubmittingEs}</span><span data-i18n-locale="en">${form.dataset.msgSubmittingEn}</span>`
+        : `<span data-i18n-locale="es">${form.dataset.msgSubmitEs}</span><span data-i18n-locale="en">${form.dataset.msgSubmitEn}</span>`;
+    };
+
+    // Turnstile
+    if (turnstileKey && turnstileMount) {
+      const w = window as unknown as { turnstile?: { render: (el: HTMLElement, opts: Record<string, unknown>) => string; reset: (id?: string) => void } };
+      const renderTurnstile = () => {
+        if (!w.turnstile) return;
+        turnstileWidgetId = w.turnstile.render(turnstileMount, {
+          sitekey: turnstileKey,
+          action: 'submit',
+          callback: (token: string) => { turnstileToken = token; },
+          'expired-callback': () => { turnstileToken = ''; },
+          'error-callback': () => { turnstileToken = ''; },
+        });
+      };
+      if (!document.querySelector('script[data-turnstile-script]')) {
+        const s = document.createElement('script');
+        s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+        s.async = true;
+        s.defer = true;
+        s.dataset.turnstileScript = '1';
+        s.onload = renderTurnstile;
+        document.head.appendChild(s);
+      } else {
+        renderTurnstile();
+      }
+    }
+
+    const validate = (data: { name: string; email: string; message: string }): string | null => {
+      if (!data.name.trim()) return txt('msgReqName');
+      if (!data.email.trim()) return txt('msgReqEmail');
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return txt('msgInvEmail');
+      if (!data.message.trim()) return txt('msgReqMessage');
+      return null;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      setStatus('');
+
+      const fd = new FormData(form);
+      const data = {
+        name: String(fd.get('name') || '').trim(),
+        email: String(fd.get('email') || '').trim(),
+        message: String(fd.get('message') || '').trim(),
+      };
+
+      const errMsg = validate(data);
+      if (errMsg) {
+        setStatus(errMsg, 'error');
+        return;
+      }
+
+      if (turnstileKey && !turnstileToken) {
+        setStatus(txt('msgCaptcha'), 'error');
+        return;
+      }
+
+      if (!apiUrl || !apiAuth) {
+        setStatus(txt('msgError'), 'error');
+        console.error('[contact] PUBLIC_API_URL or PUBLIC_API_AUTH_BASIC not configured');
+        return;
+      }
+
+      setSubmitting(true);
+      try {
+        const url = `${apiUrl.replace(/\/+$/, '')}/${schema}/${entity}/create`;
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Basic ${btoa(apiAuth)}`,
+          },
+          body: JSON.stringify({ ...data, captcha: turnstileToken || 'no-captcha' }),
+        });
+        if (!res.ok) {
+          let msg = txt('msgError');
+          try {
+            const json = await res.json();
+            if (json?.errorDescription) msg = json.errorDescription;
+          } catch {
+            // noop
+          }
+          throw new Error(msg);
+        }
+        setStatus(txt('msgSuccess'), 'success');
+        form.reset();
+        const w = window as unknown as { turnstile?: { reset: (id?: string) => void } };
+        if (w.turnstile && turnstileWidgetId) w.turnstile.reset(turnstileWidgetId);
+        turnstileToken = '';
+      } catch (err) {
+        setStatus((err as Error).message || txt('msgError'), 'error');
+        const w = window as unknown as { turnstile?: { reset: (id?: string) => void } };
+        if (w.turnstile && turnstileWidgetId) w.turnstile.reset(turnstileWidgetId);
+        turnstileToken = '';
+      } finally {
+        setSubmitting(false);
+      }
+    });
+  }
+</script>

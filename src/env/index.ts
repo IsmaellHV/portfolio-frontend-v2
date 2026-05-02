@@ -17,4 +17,13 @@ export const ENVIRONMENT = {
   META: {
     OG_IMAGE: env.PUBLIC_META_OG_IMAGE ?? '/logo.png',
   },
+  API: {
+    URL: env.PUBLIC_API_URL ?? '',
+    AUTH_BASIC: env.PUBLIC_API_AUTH_BASIC ?? '',
+    CONTACT_SCHEMA: env.PUBLIC_API_CONTACT_SCHEMA ?? 'Utilitie',
+    CONTACT_ENTITY: env.PUBLIC_API_CONTACT_ENTITY ?? 'ContactMessage',
+  },
+  TURNSTILE: {
+    SITE_KEY: env.PUBLIC_TURNSTILE_SITE_KEY ?? '',
+  },
 };
