@@ -299,6 +299,18 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         github: 'https://github.com/IsmaellHV/tools',
         image: '/src/assets/projects/tools.png',
       },
+      {
+        id: '04',
+        title: 'waHub',
+        description:
+          'Hub para conectar números de WhatsApp con agentes IA y automatizar respuestas. Pensado para agencias y desarrolladores.',
+        tags: ['Next.js', 'React', 'TypeScript', 'AI'],
+        year: '2025',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/wahub/',
+        github: 'https://github.com/IsmaellHV/wahub-frontend',
+        image: '/src/assets/projects/wahub.png',
+      },
     ],
   },
   en: {
@@ -487,6 +499,18 @@ export const PORTFOLIO_BY_LOCALE: Record<Locale, PortfolioData> = {
         link: 'https://ismaelhv.com/tools/',
         github: 'https://github.com/IsmaellHV/tools',
         image: '/src/assets/projects/tools.png',
+      },
+      {
+        id: '04',
+        title: 'waHub',
+        description:
+          'Hub to connect WhatsApp numbers with AI agents and automate replies. Built for agencies and developers.',
+        tags: ['Next.js', 'React', 'TypeScript', 'AI'],
+        year: '2025',
+        client: 'Personal',
+        link: 'https://ismaelhv.com/wahub/',
+        github: 'https://github.com/IsmaellHV/wahub-frontend',
+        image: '/src/assets/projects/wahub.png',
       },
     ],
   },
